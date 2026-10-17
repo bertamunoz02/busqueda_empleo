@@ -1,0 +1,36 @@
+{
+  "_ayuda": "Portales que se leen cada día (verificados el 17-10-2026). Para añadir una empresa, copia una línea del mismo tipo y cambia los datos. Si una fuente falla, aparece marcada en data/status.json y al pie de la web, y no rompe el resto.",
+  "workday": [
+    {"empresa": "IQVIA", "host": "iqvia.wd1.myworkdayjobs.com", "tenant": "iqvia", "site": "IQVIA"},
+    {"empresa": "Pfizer", "host": "pfizer.wd1.myworkdayjobs.com", "tenant": "pfizer", "site": "PfizerCareers"},
+    {"empresa": "Amgen", "host": "amgen.wd1.myworkdayjobs.com", "tenant": "amgen", "site": "Careers"},
+    {"empresa": "Bristol Myers Squibb", "host": "bristolmyerssquibb.wd5.myworkdayjobs.com", "tenant": "bristolmyerssquibb", "site": "BMS"},
+    {"empresa": "MSD", "host": "msd.wd5.myworkdayjobs.com", "tenant": "msd", "site": "SearchJobs"},
+    {"empresa": "Evotec", "host": "evotecgroup.wd3.myworkdayjobs.com", "tenant": "evotecgroup", "site": "Evotec_Career_Site"}
+  ],
+  "sitemap": [
+    {"empresa": "Roche", "sitemap": "https://careers.roche.com/global/en/sitemap{n}.xml", "patron_oferta": "/job/"},
+    {"empresa": "GSK", "sitemap": "https://jobs.gsk.com/gb/en/sitemap{n}.xml", "patron_oferta": "/job/"},
+    {"empresa": "Thermo Fisher (PPD)", "sitemap": "https://jobs.thermofisher.com/global/en/sitemap{n}.xml", "patron_oferta": "/job/"},
+    {"empresa": "Labcorp", "sitemap": "https://careers.labcorp.com/global/en/sitemap{n}.xml", "patron_oferta": "/job/"},
+    {"empresa": "Fortrea", "sitemap": "https://careers.fortrea.com/sitemap.xml", "patron_oferta": "/job/"},
+    {"empresa": "Merck KGaA", "sitemap": "https://careers.emdgroup.com/us/en/sitemap{n}.xml", "patron_oferta": "/job/"},
+    {"empresa": "Eli Lilly", "sitemap": "https://careers.lilly.com/us/en/sitemap{n}.xml", "patron_oferta": "/job/", "_nota": "Por confirmar: dio 403 con curl; puede funcionar desde GitHub."}
+  ],
+  "html": [
+    {"empresa": "AstraZeneca", "formato_fecha": "mdy", "url": "https://careers.astrazeneca.com/search-jobs?p={n}", "patron_oferta": "/job/"},
+    {"empresa": "Sanofi", "formato_fecha": "mdy", "url": "https://jobs.sanofi.com/en/search-jobs?p={n}", "patron_oferta": "/job/"},
+    {"empresa": "Parexel", "formato_fecha": "mdy", "url": "https://jobs.parexel.com/en/search-jobs?p={n}", "patron_oferta": "/job/"},
+    {"empresa": "Takeda", "formato_fecha": "mdy", "url": "https://jobs.takeda.com/search-jobs?p={n}", "patron_oferta": "/job/"},
+    {"empresa": "ICON", "url": "https://careers.iconplc.com/jobs?page={n}", "patron_oferta": "/jobs?/[^?#]*\\d"},
+    {"empresa": "Novartis", "url": "https://www.novartis.com/careers/career-search?page={n}", "primera_pagina": 0, "patron_oferta": "/career-search/job/details/"},
+    {"empresa": "BioMarin", "url": "https://jobs.jobvite.com/biomarin/jobs?p={n}", "primera_pagina": 0, "patron_oferta": "/biomarin/job/"}
+  ],
+  "api_json": [
+    {"empresa": "Medpace", "url": "https://careers.medpace.com/api/jobs", "web": "https://careers.medpace.com", "url_oferta": "https://careers.medpace.com/jobs/{id}"}
+  ],
+  "greenhouse": [],
+  "lever": [],
+  "smartrecruiters": [],
+  "_sin_acceso": "Johnson & Johnson, Bayer y Boehringer Ingelheim bloquean las peticiones automáticas (anti-bot), así que no se pueden incluir."
+}
