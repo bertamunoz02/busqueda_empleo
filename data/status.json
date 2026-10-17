@@ -1,1 +1,133 @@
-{"actualizado": null, "fuentes": []}
+{
+ "actualizado": "2026-10-17T18:27+00:00",
+ "fuentes": [
+  {
+   "empresa": "IQVIA",
+   "tipo": "workday",
+   "ok": true,
+   "ofertas": 813
+  },
+  {
+   "empresa": "Pfizer",
+   "tipo": "workday",
+   "ok": true,
+   "ofertas": 68
+  },
+  {
+   "empresa": "Amgen",
+   "tipo": "workday",
+   "ok": true,
+   "ofertas": 97
+  },
+  {
+   "empresa": "Bristol Myers Squibb",
+   "tipo": "workday",
+   "ok": true,
+   "ofertas": 83
+  },
+  {
+   "empresa": "MSD",
+   "tipo": "workday",
+   "ok": true,
+   "ofertas": 59
+  },
+  {
+   "empresa": "Evotec",
+   "tipo": "workday",
+   "ok": true,
+   "ofertas": 47
+  },
+  {
+   "empresa": "Roche",
+   "tipo": "sitemap",
+   "ok": true,
+   "ofertas": 440
+  },
+  {
+   "empresa": "GSK",
+   "tipo": "sitemap",
+   "ok": true,
+   "ofertas": 0
+  },
+  {
+   "empresa": "Thermo Fisher (PPD)",
+   "tipo": "sitemap",
+   "ok": true,
+   "ofertas": 75
+  },
+  {
+   "empresa": "Labcorp",
+   "tipo": "sitemap",
+   "ok": true,
+   "ofertas": 44
+  },
+  {
+   "empresa": "Fortrea",
+   "tipo": "sitemap",
+   "ok": true,
+   "ofertas": 74
+  },
+  {
+   "empresa": "Merck KGaA",
+   "tipo": "sitemap",
+   "ok": true,
+   "ofertas": 199
+  },
+  {
+   "empresa": "Eli Lilly",
+   "tipo": "sitemap",
+   "ok": true,
+   "ofertas": 67
+  },
+  {
+   "empresa": "AstraZeneca",
+   "tipo": "html",
+   "ok": true,
+   "ofertas": 244
+  },
+  {
+   "empresa": "Sanofi",
+   "tipo": "html",
+   "ok": true,
+   "ofertas": 346
+  },
+  {
+   "empresa": "Parexel",
+   "tipo": "html",
+   "ok": true,
+   "ofertas": 68
+  },
+  {
+   "empresa": "Takeda",
+   "tipo": "html",
+   "ok": true,
+   "ofertas": 289
+  },
+  {
+   "empresa": "ICON",
+   "tipo": "html",
+   "ok": true,
+   "ofertas": 94
+  },
+  {
+   "empresa": "Novartis",
+   "tipo": "html",
+   "ok": false,
+   "error": "TypeError: sequence item 1: expected str instance, list found",
+   "conservadas": 0
+  },
+  {
+   "empresa": "BioMarin",
+   "tipo": "html",
+   "ok": true,
+   "ofertas": 18
+  },
+  {
+   "empresa": "Medpace",
+   "tipo": "api_json",
+   "ok": false,
+   "error": "RuntimeError: la respuesta no contiene una lista de ofertas",
+   "conservadas": 0
+  }
+ ]
+}
