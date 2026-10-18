@@ -6,7 +6,16 @@
     {"empresa": "Amgen", "host": "amgen.wd1.myworkdayjobs.com", "tenant": "amgen", "site": "Careers"},
     {"empresa": "Bristol Myers Squibb", "host": "bristolmyerssquibb.wd5.myworkdayjobs.com", "tenant": "bristolmyerssquibb", "site": "BMS"},
     {"empresa": "MSD", "host": "msd.wd5.myworkdayjobs.com", "tenant": "msd", "site": "SearchJobs"},
-    {"empresa": "Evotec", "host": "evotecgroup.wd3.myworkdayjobs.com", "tenant": "evotecgroup", "site": "Evotec_Career_Site"}
+    {"empresa": "Evotec", "host": "evotecgroup.wd3.myworkdayjobs.com", "tenant": "evotecgroup", "site": "Evotec_Career_Site"},
+    {"empresa": "Almirall", "host": "almirall.wd3.myworkdayjobs.com", "tenant": "almirall", "site": "External"},
+    {"empresa": "Viatris", "host": "viatris.wd5.myworkdayjobs.com", "tenant": "viatris", "site": "External"},
+    {"empresa": "Gilead", "host": "gilead.wd1.myworkdayjobs.com", "tenant": "gilead", "site": "GileadCareers"},
+    {"empresa": "Rovi", "host": "rovi.wd3.myworkdayjobs.com", "tenant": "rovi", "site": "Rovi_Careers"},
+    {"empresa": "Regeneron", "host": "regeneron.wd1.myworkdayjobs.com", "tenant": "regeneron", "site": "Careers"},
+    {"empresa": "Ipsen", "host": "ipsen.wd103.myworkdayjobs.com", "tenant": "ipsen", "site": "Ipsen_Careers"},
+    {"empresa": "Lonza", "host": "lonza.wd3.myworkdayjobs.com", "tenant": "lonza", "site": "Lonza_Careers"},
+    {"empresa": "Ferring", "host": "ferring.wd3.myworkdayjobs.com", "tenant": "ferring", "site": "Ferring"},
+    {"empresa": "Sartorius", "host": "sartorius.wd3.myworkdayjobs.com", "tenant": "sartorius", "site": "SartoriusCareers"}
   ],
   "sitemap": [
     {"empresa": "Roche", "sitemap": "https://careers.roche.com/global/en/sitemap{n}.xml", "patron_oferta": "/job/"},
