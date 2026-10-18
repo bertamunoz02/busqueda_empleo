@@ -91,6 +91,22 @@ NO_EUROPA = re.compile(r"\b(united states|usa|u\.s\.|estados unidos|canada|mexic
                        r"singapore|australia|korea|philippines|filipinas|south africa|puerto rico|"
                        r"massachusetts|new jersey|california|pennsylvania|north carolina|texas|illinois)\b")
 
+# Códigos de estado de EE. UU. que no son también códigos de país europeos
+# (DE es Alemania y Delaware: gana Alemania en este buscador).
+ESTADOS_USA = {"AL", "AK", "AZ", "AR", "CA", "CO", "CT", "FL", "GA", "HI", "ID", "IL", "IN",
+               "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "NE", "NV",
+               "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC", "SD",
+               "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY", "DC"}
+
+
+def _parece_eeuu(texto):
+    """Detecta la sigla 'US' como palabra suelta ('- MA - US', 'Cambridge, US') y los
+    códigos de estado al final ('Cambridge, MA'). En mayúsculas, como vienen."""
+    if re.search(r"(?:^|[\s,;(\-–/])US(?:[\s,;)\-–/]|$)", texto):
+        return True
+    m = re.search(r"[,–\-]\s*([A-Z]{2})\s*$", texto)
+    return bool(m and m.group(1) in ESTADOS_USA)
+
 _alias = []
 for pais, variantes in list(PAISES.items()) + list(CIUDADES.items()):
     for v in variantes:
@@ -108,7 +124,7 @@ def pais_de(texto):
                 return p
         return None
     t = texto.lower()
-    if NO_EUROPA.search(t) or re.search(r",\s*[A-Z]{2}\s*,\s*(US|USA)\b", texto):
+    if NO_EUROPA.search(t) or _parece_eeuu(texto) or re.search(r",\s*[A-Z]{2}\s*,\s*(US|USA)\b", texto):
         return None
     # Primero nombres largos (más fiables), luego códigos de 2 letras en formato "ES-Madrid" o ", ES"
     for pais, v, corto in _alias:
@@ -128,10 +144,13 @@ def _iri(url):
     return urllib.parse.quote(url, safe=":/?#[]@!$&'()*+,;=%~")
 
 
-def http(url, datos=None, intentos=3):
+IDIOMA = "es-ES,es;q=0.9,en;q=0.8"
+
+
+def http(url, datos=None, intentos=3, idioma=IDIOMA):
     cuerpo = json.dumps(datos).encode() if datos is not None else None
     cabeceras = {"User-Agent": UA, "Accept": "application/json",
-                 "Accept-Language": "es-ES,es;q=0.9,en;q=0.8"}
+                 "Accept-Language": idioma}
     if cuerpo is not None:
         cabeceras["Content-Type"] = "application/json"
     for i in range(intentos):
@@ -248,17 +267,30 @@ def workday(fuente, hoy):
         except Exception:
             d = {}
         ubic = d.get("location") or r.get("locationsText") or ""
-        extra = " ".join(d.get("additionalLocations") or [])
-        pais = (pais_de(d.get("country", {}).get("descriptor") if isinstance(d.get("country"), dict) else "")
-                or pais_de(ubic) or pais_de(extra))
+        extra = d.get("additionalLocations") or []
+        if isinstance(extra, str):
+            extra = [extra]
+        candidatas = [u.strip() for u in [ubic, *extra] if isinstance(u, str) and u.strip()]
+        # La oferta se muestra con la primera ubicación europea; así el país y la
+        # ciudad que se ven siempre cuadran (antes el país podía salir de una
+        # ubicación secundaria, p. ej. Melbourne + Reading -> "Reino Unido").
+        elegida, pais = None, None
+        for cand in candidatas:
+            p = pais_de(cand)
+            if p:
+                elegida, pais = cand, p
+                break
+        if not pais:  # último recurso: el descriptor de país del portal
+            pais = pais_de(d.get("country", {}).get("descriptor") if isinstance(d.get("country"), dict) else "")
+            elegida = ubic
         if not pais:
             return None
         desc = limpiar_html(d.get("jobDescription", ""))
         return {
             "titulo": r.get("title") or d.get("title", ""),
             "empresa": fuente["empresa"],
-            "ubicacion": ubic,
-            "otras_ubicaciones": extra,
+            "ubicacion": elegida or ubic,
+            "otras_ubicaciones": "; ".join(u for u in candidatas if u != elegida)[:200],
             "pais": pais,
             "fecha": d.get("startDate") or fecha_relativa(r.get("postedOn"), hoy),
             "url": d.get("externalUrl") or (web + r["externalPath"]),
@@ -355,6 +387,23 @@ def smartrecruiters(fuente, hoy):
 
 CACHE = DATOS / "cache"
 MAX_NUEVAS_POR_EMPRESA = 3000
+
+
+def _depurar_cache(cache):
+    """Repasa las ofertas cacheadas con las reglas de país actuales: corrige el
+    país si la ubicación dice otra cosa y marca como cerradas las que no son de
+    Europa (entradas guardadas por versiones antiguas del lector)."""
+    for u, d in list(cache.items()):
+        if not isinstance(d, dict) or d.get("fuera"):
+            continue
+        ub = d.get("ubicacion") or ""
+        if not ub:
+            continue
+        p = pais_de(ub)
+        if p is None and (NO_EUROPA.search(ub.lower()) or _parece_eeuu(ub)):
+            cache[u] = {"fuera": True}
+        elif p and p != d.get("pais"):
+            d["pais"] = p
 
 
 def _urls_sitemap(url, vistos=None):
@@ -482,6 +531,7 @@ def sitemap(fuente, hoy):
         cache = json.loads(archivo.read_text(encoding="utf-8"))
     except Exception:
         cache = {}
+    _depurar_cache(cache)
 
     nuevas = [u for u in urls if u not in cache][:MAX_NUEVAS_POR_EMPRESA]
 
@@ -652,6 +702,7 @@ def listado_html(fuente, hoy):
         raise RuntimeError("no se han encontrado enlaces a ofertas en el listado")
 
     archivo, cache = _cargar_cache(fuente)
+    _depurar_cache(cache)
     mdy = fuente.get("formato_fecha") == "mdy"
 
     def oferta(url, titulo, ubic, pais, fecha, extra=None):
@@ -777,7 +828,7 @@ def api_json(fuente, hoy):
     items, vistos, primera = [], set(), None
     for pagina in range(1, 201):
         url = fuente["url"] + (f"{sep}page={pagina}&limit=100" if fuente.get("paginar", True) else "")
-        datos = http(url)
+        datos = http(url, idioma=fuente.get("idioma", IDIOMA))
         primera = primera if primera is not None else datos
         lote = [it.get("data") if isinstance(it, dict) and isinstance(it.get("data"), dict) else it
                 for it in _lista_de_ofertas(datos)]
@@ -826,6 +877,31 @@ def api_json(fuente, hoy):
 
 LECTORES = {"workday": workday, "sitemap": sitemap, "html": listado_html, "api_json": api_json, "greenhouse": greenhouse, "lever": lever,
             "smartrecruiters": smartrecruiters}
+
+# Ofertas con más de este tiempo se consideran cerradas aunque el portal siga
+# mostrándolas (p. ej. bolsas de traductores publicadas en 2023).
+MAX_ANTIGUEDAD_DIAS = 365
+
+# Bolsa genérica de traductores autónomos de IQVIA: no es empleo farma.
+PATRON_TRADUCTORES = re.compile(r"translators?\s*/\s*linguists", re.I)
+
+
+def limpiar_titulo(t):
+    """Quita restos del portal como el prefijo 'Job Posting Title' de Workday."""
+    return re.sub(r"^\s*job posting title[:\s–-]*", "", (t or "").strip(), flags=re.I).strip()
+
+
+def motivo_descarte(o, hoy):
+    if PATRON_TRADUCTORES.search(o.get("titulo") or ""):
+        return "bolsa de traductores"
+    f = (o.get("fecha") or "")[:10]
+    if f:
+        try:
+            if (hoy.date() - datetime.strptime(f, "%Y-%m-%d").date()).days > MAX_ANTIGUEDAD_DIAS:
+                return f"publicada hace más de {MAX_ANTIGUEDAD_DIAS} días"
+        except ValueError:
+            pass
+    return None
 
 
 def enriquecer(o):
@@ -881,6 +957,21 @@ def main():
         if clave not in vistas:
             vistas.add(clave)
             unicas.append(o)
+
+    # Limpieza final: títulos con restos del portal y ofertas descartadas
+    descartadas = Counter()
+    limpias = []
+    for o in unicas:
+        o["titulo"] = limpiar_titulo(o["titulo"]) or o["url"].rstrip("/").rsplit("/", 1)[-1]
+        motivo = motivo_descarte(o, hoy)
+        if motivo:
+            descartadas[motivo] += 1
+        else:
+            limpias.append(o)
+    unicas = limpias
+    for motivo, n in descartadas.most_common():
+        print(f"      descartadas {n} ofertas ({motivo})")
+
     unicas.sort(key=lambda o: o.get("fecha") or "", reverse=True)
     for i, o in enumerate(unicas):
         o["id"] = i
@@ -895,7 +986,8 @@ def main():
     }
     (DATOS / "jobs.json").write_text(json.dumps({"meta": meta, "ofertas": unicas},
                                                 ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
-    (DATOS / "status.json").write_text(json.dumps({"actualizado": meta["actualizado"], "fuentes": estado},
+    (DATOS / "status.json").write_text(json.dumps({"actualizado": meta["actualizado"], "fuentes": estado,
+                                                   "descartadas": dict(descartadas)},
                                                   ensure_ascii=False, indent=1), encoding="utf-8")
     ok = sum(1 for e in estado if e["ok"])
     print(f"\n{len(unicas)} ofertas de {ok}/{len(estado)} fuentes")

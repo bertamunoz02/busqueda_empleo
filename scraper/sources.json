@@ -27,7 +27,7 @@
     {"empresa": "BioMarin", "url": "https://jobs.jobvite.com/biomarin/jobs?p={n}", "primera_pagina": 0, "patron_oferta": "/biomarin/job/"}
   ],
   "api_json": [
-    {"empresa": "Medpace", "url": "https://careers.medpace.com/api/jobs", "web": "https://careers.medpace.com", "url_oferta": "https://careers.medpace.com/jobs/{id}"}
+    {"empresa": "Medpace", "url": "https://careers.medpace.com/api/jobs", "web": "https://careers.medpace.com", "url_oferta": "https://careers.medpace.com/jobs/{id}", "idioma": "en"}
   ],
   "greenhouse": [],
   "lever": [],
