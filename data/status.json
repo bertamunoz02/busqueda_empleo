@@ -1,11 +1,11 @@
 {
- "actualizado": "2026-10-18T11:04+00:00",
+ "actualizado": "2026-10-18T12:38+00:00",
  "fuentes": [
   {
    "empresa": "IQVIA",
    "tipo": "workday",
    "ok": true,
-   "ofertas": 819
+   "ofertas": 817
   },
   {
    "empresa": "Pfizer",
@@ -23,7 +23,7 @@
    "empresa": "Bristol Myers Squibb",
    "tipo": "workday",
    "ok": true,
-   "ofertas": 58
+   "ofertas": 60
   },
   {
    "empresa": "MSD",
@@ -36,6 +36,60 @@
    "tipo": "workday",
    "ok": true,
    "ofertas": 47
+  },
+  {
+   "empresa": "Almirall",
+   "tipo": "workday",
+   "ok": true,
+   "ofertas": 55
+  },
+  {
+   "empresa": "Viatris",
+   "tipo": "workday",
+   "ok": true,
+   "ofertas": 138
+  },
+  {
+   "empresa": "Gilead",
+   "tipo": "workday",
+   "ok": true,
+   "ofertas": 47
+  },
+  {
+   "empresa": "Rovi",
+   "tipo": "workday",
+   "ok": true,
+   "ofertas": 36
+  },
+  {
+   "empresa": "Regeneron",
+   "tipo": "workday",
+   "ok": true,
+   "ofertas": 60
+  },
+  {
+   "empresa": "Ipsen",
+   "tipo": "workday",
+   "ok": true,
+   "ofertas": 131
+  },
+  {
+   "empresa": "Lonza",
+   "tipo": "workday",
+   "ok": true,
+   "ofertas": 253
+  },
+  {
+   "empresa": "Ferring",
+   "tipo": "workday",
+   "ok": true,
+   "ofertas": 15
+  },
+  {
+   "empresa": "Sartorius",
+   "tipo": "workday",
+   "ok": true,
+   "ofertas": 97
   },
   {
    "empresa": "Roche",
@@ -53,13 +107,13 @@
    "empresa": "Thermo Fisher (PPD)",
    "tipo": "sitemap",
    "ok": true,
-   "ofertas": 164
+   "ofertas": 180
   },
   {
    "empresa": "Labcorp",
    "tipo": "sitemap",
    "ok": true,
-   "ofertas": 37
+   "ofertas": 38
   },
   {
    "empresa": "Fortrea",
@@ -71,7 +125,7 @@
    "empresa": "Merck KGaA",
    "tipo": "sitemap",
    "ok": true,
-   "ofertas": 214
+   "ofertas": 213
   },
   {
    "empresa": "Eli Lilly",
@@ -101,7 +155,7 @@
    "empresa": "Takeda",
    "tipo": "html",
    "ok": true,
-   "ofertas": 275
+   "ofertas": 274
   },
   {
    "empresa": "ICON",
@@ -129,8 +183,8 @@
   }
  ],
  "descartadas": {
-  "bolsa de traductores": 134,
-  "bolsa 'Save for Later'": 21,
-  "publicada hace más de 30 días": 916
+  "publicada hace más de 30 días": 1396,
+  "bolsa de traductores": 133,
+  "bolsa 'Save for Later'": 21
  }
 }
