@@ -33,7 +33,7 @@ DEPARTAMENTOS = [
         "biostatistic", "data analytics", "analytics manager", "bioestadist", "statistician", "statistical programmer", "estadistic",
         "data scientist", "data science", "real world evidence", "rwe", "epidemiolog",
         "bioinformatic", "computational biology", "machine learning", "data analyst",
-        "data management", "sas programmer", "health economics", "heor", "outcomes research"]),
+        "data management", "business intelligence", "sfe", "sas programmer", "health economics", "heor", "outcomes research"]),
     ("acceso", "Market access", [
         "market access", "acceso al mercado", "pricing", "reimbursement", "health technology",
         "hta", "access manager", "government affairs", "public affairs", "relaciones institucionales",
@@ -45,7 +45,7 @@ DEPARTAMENTOS = [
         "control de calidad", "batch release", "liberacion de lotes"]),
     ("id", "Investigación y desarrollo (I+D)", [
         "research scientist", "pk analyst", "pharmacokinetic", "bioanalytic", "analytical science", "cell line", "genomics", "pathology", "laborant", "chemikant", "lab analyst", "biobanque", "biobank", "vaccins", "caracterisation", "characterization", "msat", "material expert", "scientist", "cientific", "investigador", "investigacion",
-        "research associate", "discovery", "preclinical", "preclinica", "laboratory",
+        "non clinical", "nonclinical", "safety assessment", "research associate", "discovery", "preclinical", "preclinica", "laboratory",
         "laboratorio", "lab technician", "tecnico de laboratorio", "biolog", "chemist",
         "quimic", "pharmacolog", "toxicolog", "formulation", "formulacion", "galenic",
         "drug product development", "process development", "analytical development",
