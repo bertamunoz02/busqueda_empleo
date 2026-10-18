@@ -15,22 +15,22 @@ DEPARTAMENTOS = [
         "pv specialist", "pv scientist", "pv associate", "pv manager", "arzneimittelsicherheit",
         "vigilance"]),
     ("regulatorios", "Asuntos regulatorios", [
-        "regulatory", "regulatorio", "regulatorios", "registro sanitario", "cmc regulatory",
+        "regulatory", "cmc lifecycle", "license to operate", "regulatorio", "regulatorios", "registro sanitario", "cmc regulatory",
         "labeling", "labelling", "submission", "dossier", "zulassung", "affaires reglementaires"]),
     ("medico", "Departamento médico", [
         "medical science liaison", "msl", "medical affairs", "medical advisor", "medical manager",
-        "medical director", "director medico", "directora medica", "asesor medico", "gerente medico",
+        "medical director", "medical sciences liaison", "directeur medical", "medizinischer", "arzt", "arztin", "therapy area specialist", "medical education", "medical healthcare", "medical core", "patient journey", "director medico", "directora medica", "asesor medico", "gerente medico",
         "responsable medico", "medico especialista", "medica especialista", "medical information", "informacion medica",
         "medical lead", "medical scientific", "medizinisch", "medical writer", "medical writing",
         "medical excellence", "field medical"]),
     ("clinica", "Investigación clínica", [
-        "clinical research", "clinical trial", "clinical operations", "clinical study",
+        "clinical research", "clinical associate", "clinical coordinator", "clinical delivery", "trial clinical", "study associate", "study site", "site management", "site engagement", "site payment", "site payments", "site data", "start up lead", "startup lead", "central data monitor", "clinical paediatric", "clinical pediatric", "trial lead", "global study", "country approval", "research nurse", "clinical trial", "clinical operations", "clinical study",
         "clinical project", "cra", "monitor clinico", "ensayo", "ensayos clinicos",
         "study manager", "study start", "site manager", "site activation", "trial manager",
         "clinical scientist", "clinical development", "investigacion clinica", "clinical data",
         "ctm", "clinical trial assistant", "feasibility", "klinisch", "etudes cliniques"]),
     ("datos", "Datos y bioestadística", [
-        "biostatistic", "bioestadist", "statistician", "statistical programmer", "estadistic",
+        "biostatistic", "data analytics", "analytics manager", "bioestadist", "statistician", "statistical programmer", "estadistic",
         "data scientist", "data science", "real world evidence", "rwe", "epidemiolog",
         "bioinformatic", "computational biology", "machine learning", "data analyst",
         "data management", "sas programmer", "health economics", "heor", "outcomes research"]),
@@ -44,7 +44,7 @@ DEPARTAMENTOS = [
         "capa", "qualitat", "qualite", "microbiolog", "analytical chemist", "quimico analitico",
         "control de calidad", "batch release", "liberacion de lotes"]),
     ("id", "I+D / Investigación preclínica", [
-        "research scientist", "scientist", "cientific", "investigador", "investigacion",
+        "research scientist", "pk analyst", "pharmacokinetic", "bioanalytic", "analytical science", "cell line", "genomics", "pathology", "laborant", "chemikant", "lab analyst", "biobanque", "biobank", "vaccins", "caracterisation", "characterization", "msat", "material expert", "scientist", "cientific", "investigador", "investigacion",
         "research associate", "discovery", "preclinical", "preclinica", "laboratory",
         "laboratorio", "lab technician", "tecnico de laboratorio", "biolog", "chemist",
         "quimic", "pharmacolog", "toxicolog", "formulation", "formulacion", "galenic",
@@ -53,18 +53,18 @@ DEPARTAMENTOS = [
         "immunolog", "oncology research", "translational", "biomarker", "cell therapy",
         "gene therapy", "forschung", "recherche", "wissenschaftl"]),
     ("produccion", "Producción y fabricación", [
-        "manufacturing", "production", "produccion", "fabricacion", "operator", "operario",
+        "manufacturing", "process technician", "asset lead", "asset excellence", "conducteur d appareil", "pharmacy technician", "production", "produccion", "fabricacion", "operator", "operario",
         "operador", "technician production", "tecnico de produccion", "packaging",
         "acondicionamiento", "fill finish", "aseptic", "esteril", "plant manager",
         "jefe de planta", "shift", "turno", "process engineer", "upstream", "downstream",
         "bioprocess", "produktion", "herstellung", "fabrication", "sterile"]),
     ("it", "IT y digital", [
-        "software", "developer", "desarrollador", "it ", " it", "information technology",
+        "software", "scrum master", "product owner", "observability", "administrator", "collaboration & productivity", "platform services", "informatik", "dashboard", "analytics", "developer", "desarrollador", "it ", " it", "information technology",
         "cloud", "cyber", "ciberseguridad", "devops", "sap ", "erp", "digital transformation", "data engineer",
         "architect", "arquitecto", "infrastructure", "ai ", "artificial intelligence",
         "service desk", "sistemas", "network", "programador", "full stack", "frontend", "backend"]),
     ("ingenieria", "Ingeniería y mantenimiento", [
-        "engineer", "engineering", "ingenier", "maintenance", "mantenimiento", "automation",
+        "engineer", "elektroniker", "building safety", "hard services", "real estate", "process equipment", "technical application", "commissioning", "qualification manager", "capex", "estimating", "hazard communication", "safety manager", "engineering", "ingenier", "maintenance", "mantenimiento", "automation",
         "automatizacion", "facilities", "instalaciones", "hvac", "metrolog", "calibration",
         "calibracion", "technical services", "utilities", "ehs", "hse", "seguridad industrial",
         "prevencion de riesgos", "environment health"]),
@@ -74,11 +74,11 @@ DEPARTAMENTOS = [
         "compras", "buyer", "sourcing", "distribution", "distribucion", "demand planner",
         "s&op", "import", "export", "customs", "aduanas"]),
     ("marketing", "Marketing", [
-        "marketing", "brand manager", "product manager", "jefe de producto", "brand lead",
+        "marketing", "brand manager", "events", "congress", "campaign", "creation digitale", "insights", "corporate affairs", "media manager", "product manager", "jefe de producto", "brand lead",
         "omnichannel", "customer experience", "launch", "lanzamiento", "communications",
         "comunicacion", "digital marketing", "content"]),
     ("ventas", "Ventas y visita médica", [
-        "sales", "ventas", "comercial", "key account", "kam", "account manager",
+        "sales", "pharmareferent", "apothekenreferent", "aussendienst", "apothekenaussendienst", "medisch afgevaardigde", "afgevaardigde", "business relationship manager", "contracting and tender", "tender", "negotiation", "customer success", "community development", "customer partnering", "account specialist", "business leader", "ventas", "comercial", "key account", "kam", "account manager",
         "visitador", "delegado", "representative", "rep ", "territory", "business development",
         "desarrollo de negocio", "area manager", "vertrieb", "aussendienst", "ventes",
         "delegue", "customer engagement", "hospital specialist", "specialty manager"]),
@@ -86,11 +86,19 @@ DEPARTAMENTOS = [
         "legal", "lawyer", "abogad", "counsel", "compliance", "cumplimiento normativo",
         "privacy", "privacidad", "patent", "patente", "intellectual property", "ethics"]),
     ("rrhh", "Recursos humanos", [
-        "human resources", "recursos humanos", "hr ", " hr", "people partner", "talent",
+        "human resources", "employee lifecycle", "p&c business partner", "people & culture", "benefits", "engagement & capabilities", "recursos humanos", "hr ", " hr", "people partner", "talent",
         "recruit", "seleccion", "reclutamiento", "payroll", "nomina", "learning",
         "formacion", "compensation"]),
+    ("proyectos", "Proyectos, estrategia y operaciones", [
+        "project manager", "projektmanager", "projekt manager", "program manager", "programme manager",
+        "program management", "project management", "project reviews", "pmo", "jefe de proyecto",
+        "gestor de proyectos", "project change", "change manager", "transformation", "operational excellence",
+        "operations manager", "manager operations", "excelencia operacional", "strategy", "estrategia",
+        "transition", "knowledge transfer", "efficiency", "continuous improvement", "amelioration continue",
+        "lean", "business excellence", "governance", "team leader", "team lead", "delivery lead",
+        "consultant", "consultor", "chief of staff", "regional center", "benchmarking"]),
     ("finanzas", "Finanzas y administración", [
-        "finance", "financ", "accountant", "accounting", "contab", "controller",
+        "finance", "finops", "investor relations", "contract analyst", "contract operations", "contract to pay", "transparency reporting", "customer service", "proposals development", "proposals", "proposal", "droit boursier", "category manager", "contracting & partner", "financ", "accountant", "accounting", "contab", "controller",
         "controlling", "tax", "fiscal", "treasury", "tesoreria", "audit financ",
         "administracion", "administrative", "administrativ", "assistant", "asistente",
         "secretar", "office manager", "fp&a", "credit", "billing", "facturacion"]),
@@ -130,13 +138,13 @@ def departamento(titulo, categoria="", descripcion=""):
 
 NIVELES = [
     ("practicas", ["intern", "internship", "becari", "beca", "practicas", "trainee",
-                    "praktik", "stagiaire", "stage", "apprentice", "aprendiz", "werkstudent",
+                    "praktik", "stagiaire", "stage", "apprentice", "aprendiz", "ausbildung", "duales studium", "apprentissage", "alternance", "examensarbete", "thesis", "stagiaire", "university student", "student placement", "werkstudent",
                     "working student", "placement", "summer student", "co op", "coop"]),
     ("graduado", ["graduate", "recien graduado", "early career", "junior", "jr ", "entry level",
                    "programa de graduados", "assistant"]),
     ("direccion", ["director", "head of", "vice president", "vp ", "chief", "general manager",
                     "country manager", "directora", "jefe de departamento", "executive director"]),
-    ("senior", ["senior", "sr ", "lead", "principal", "manager", "gerente", "responsable",
+    ("senior", ["senior", "sr ", "lead", "leader", "principal", "manager", "gerente", "responsable",
                  "jefe", "expert", "experto", "specialist ii", "staff"]),
 ]
 

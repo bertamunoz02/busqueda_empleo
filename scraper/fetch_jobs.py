@@ -9,8 +9,11 @@ import re
 import sys
 import time
 import urllib.error
+import urllib.parse
 import urllib.request
+from collections import Counter
 from concurrent.futures import ThreadPoolExecutor
+from html import unescape as _unescape
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
@@ -120,6 +123,11 @@ def pais_de(texto):
     return None
 
 
+def _iri(url):
+    """Codifica los caracteres no ASCII de una URL (urllib no los acepta tal cual)."""
+    return urllib.parse.quote(url, safe=":/?#[]@!$&'()*+,;=%~")
+
+
 def http(url, datos=None, intentos=3):
     cuerpo = json.dumps(datos).encode() if datos is not None else None
     cabeceras = {"User-Agent": UA, "Accept": "application/json",
@@ -128,7 +136,7 @@ def http(url, datos=None, intentos=3):
         cabeceras["Content-Type"] = "application/json"
     for i in range(intentos):
         try:
-            req = urllib.request.Request(url, data=cuerpo, headers=cabeceras)
+            req = urllib.request.Request(_iri(url), data=cuerpo, headers=cabeceras)
             with urllib.request.urlopen(req, timeout=40) as r:
                 return json.loads(r.read().decode("utf-8", "replace"))
         except urllib.error.HTTPError as e:
@@ -145,7 +153,7 @@ def http_texto(url, intentos=3):
                  "Accept-Language": "es-ES,es;q=0.9,en;q=0.8"}
     for i in range(intentos):
         try:
-            req = urllib.request.Request(url, headers=cabeceras)
+            req = urllib.request.Request(_iri(url), headers=cabeceras)
             with urllib.request.urlopen(req, timeout=40) as r:
                 return r.read().decode("utf-8", "replace")
         except urllib.error.HTTPError as e:
@@ -400,22 +408,66 @@ def _jobposting(html):
     return None
 
 
+def _s(v):
+    """Convierte a texto valores que en JSON-LD pueden venir como lista o como objeto."""
+    if v is None:
+        return ""
+    if isinstance(v, list):
+        return ", ".join(t for t in (_s(x) for x in v) if t)
+    if isinstance(v, dict):
+        return _s(v.get("name") or v.get("@value") or v.get("value") or "")
+    return str(v).strip()
+
+
 def _ubicaciones_jsonld(jp):
     locs = jp.get("jobLocation") or []
     if isinstance(locs, dict):
         locs = [locs]
     textos = []
-    for l in locs:
-        a = (l or {}).get("address") or {}
-        if isinstance(a, str):
-            textos.append(a)
+    for l in locs if isinstance(locs, list) else []:
+        if isinstance(l, str):
+            textos.append(l)
             continue
-        pais = a.get("addressCountry")
-        if isinstance(pais, dict):
-            pais = pais.get("name")
-        partes = [a.get("addressLocality"), a.get("addressRegion"), pais]
-        textos.append(", ".join(p for p in partes if p))
+        direcciones = (l or {}).get("address") or {}
+        for a in direcciones if isinstance(direcciones, list) else [direcciones]:
+            if isinstance(a, str):
+                textos.append(a)
+                continue
+            partes = [_s(a.get("addressLocality")), _s(a.get("addressRegion")), _s(a.get("addressCountry"))]
+            textos.append(", ".join(p for p in partes if p))
     return [t for t in textos if t]
+
+
+def _datos_sin_jsonld(html):
+    """Plan B para páginas Phenom sin JSON-LD (GSK): objeto phApp.ddo o metaetiquetas."""
+    datos = {}
+    m = re.search(r'"jobDetail"\s*:\s*\{.*?"job"\s*:\s*(\{.*?\})\s*[,}]\s*"', html, re.S)
+    trozo = m.group(1) if m else html
+    for campo, claves in (("titulo", ["title"]), ("ubicacion", ["cityStateCountry", "location", "cityState"]),
+                          ("pais", ["country"]), ("fecha", ["postedDate", "dateCreated"]),
+                          ("categoria", ["category"]), ("descripcion", ["descriptionTeaser", "description"])):
+        for k in claves:
+            mm = re.search(r'"' + k + r'"\s*:\s*"((?:[^"\\]|\\.){1,400})"', trozo)
+            if mm:
+                try:
+                    datos[campo] = json.loads('"' + mm.group(1) + '"')
+                except Exception:
+                    datos[campo] = mm.group(1)
+                break
+    if not datos.get("ubicacion"):
+        og = re.search(r'<meta[^>]+property=["\']og:title["\'][^>]+content=["\']([^"\']+)', html, re.I) \
+            or re.search(r'<meta[^>]+content=["\']([^"\']+)["\'][^>]+property=["\']og:title', html, re.I)
+        if og:
+            t = _unescape(og.group(1))
+            mm = re.match(r"(.+?)\s+in\s+(.+?)\s*(\||$)", t)
+            if mm:
+                datos.setdefault("titulo", mm.group(1))
+                datos["ubicacion"] = mm.group(2)
+    if not datos.get("ubicacion"):
+        kw = re.search(r'<meta[^>]+name=["\']keywords["\'][^>]+content=["\']([^"\']+)', html, re.I)
+        if kw:
+            datos["ubicacion"] = _unescape(kw.group(1))
+    return datos
 
 
 def sitemap(fuente, hoy):
@@ -433,13 +485,32 @@ def sitemap(fuente, hoy):
 
     nuevas = [u for u in urls if u not in cache][:MAX_NUEVAS_POR_EMPRESA]
 
+    errores = []
+
     def leer(u):
         try:
-            jp = _jobposting(http_texto(u))
-        except Exception:
+            html = http_texto(u)
+        except urllib.error.HTTPError as e:
+            if e.code in (404, 410):
+                return u, {"fuera": True}  # oferta cerrada aunque siga en el sitemap
+            errores.append(f"HTTP {e.code}")
             return u, None  # se reintentará mañana
+        except Exception as e:
+            errores.append(type(e).__name__)
+            return u, None
+        jp = _jobposting(html)
         if not jp:
-            return u, {"fuera": True}
+            d = _datos_sin_jsonld(html)
+            pais = pais_de(d.get("pais", "")) or pais_de(d.get("ubicacion", ""))
+            if not pais:
+                return u, {"fuera": True}
+            titulo = d.get("titulo") or re.sub(r"[-_]+", " ", _unescape(u.rstrip("/").rsplit("/", 1)[-1]))
+            return u, {
+                "titulo": limpiar_html(titulo, 200), "empresa": fuente["empresa"],
+                "ubicacion": d.get("ubicacion") or pais, "otras_ubicaciones": "", "pais": pais,
+                "fecha": (d.get("fecha") or "")[:10] or None, "url": u, "jornada": "", "remoto": "",
+                "categoria": d.get("categoria", ""), "descripcion": limpiar_html(d.get("descripcion", "")),
+            }
         ubics = _ubicaciones_jsonld(jp)
         pais = next((p for p in map(pais_de, ubics) if p), None)
         if not pais:
@@ -447,23 +518,30 @@ def sitemap(fuente, hoy):
         remoto = "remote" if str(jp.get("jobLocationType", "")).upper() == "TELECOMMUTE" else ""
         empleo = jp.get("employmentType") or ""
         return u, {
-            "titulo": limpiar_html(jp.get("title", ""), 200),
+            "titulo": limpiar_html(_s(jp.get("title")), 200),
             "empresa": fuente["empresa"],
             "ubicacion": ubics[0],
             "otras_ubicaciones": "; ".join(ubics[1:])[:200],
             "pais": pais,
-            "fecha": (jp.get("datePosted") or "")[:10] or None,
+            "fecha": _s(jp.get("datePosted"))[:10] or None,
             "url": u,
-            "jornada": ", ".join(empleo) if isinstance(empleo, list) else empleo,
+            "jornada": _s(empleo),
             "remoto": remoto,
-            "categoria": jp.get("occupationalCategory") or jp.get("industry") or "",
-            "descripcion": limpiar_html(jp.get("description", "")),
+            "categoria": _s(jp.get("occupationalCategory") or jp.get("industry")),
+            "descripcion": limpiar_html(_s(jp.get("description"))),
         }
 
     with ThreadPoolExecutor(HILOS_DETALLE) as ex:
         for u, dato in ex.map(leer, nuevas):
             if dato is not None:
                 cache[u] = dato
+
+    if nuevas and len(errores) == len(nuevas):
+        comunes = ", ".join(f"{k} x{v}" for k, v in Counter(errores).most_common(3))
+        raise RuntimeError(f"no se pudo abrir ninguna de las {len(nuevas)} ofertas ({comunes})")
+    if errores:
+        print(f"      {fuente['empresa']}: {len(errores)} ofertas no se pudieron abrir, se reintentarán mañana "
+              f"({', '.join(f'{k} x{v}' for k, v in Counter(errores).most_common(3))})")
 
     vigentes = set(urls)
     cache = {u: d for u, d in cache.items() if u in vigentes}  # olvidar ofertas cerradas
@@ -612,10 +690,10 @@ def listado_html(fuente, hoy):
             pais = next((p for p in map(pais_de, ubics) if p), None)
             if not pais:
                 return url, {"fuera": True}
-            return url, oferta(url, limpiar_html(jp.get("title") or titulo, 200), ubics[0], pais,
-                               (jp.get("datePosted") or "")[:10] or _fecha_en_texto(fila, mdy),
-                               {"descripcion": limpiar_html(jp.get("description", "")),
-                                "categoria": jp.get("occupationalCategory") or ""})
+            return url, oferta(url, limpiar_html(_s(jp.get("title")) or titulo, 200), ubics[0], pais,
+                               _s(jp.get("datePosted"))[:10] or _fecha_en_texto(fila, mdy),
+                               {"descripcion": limpiar_html(_s(jp.get("description"))),
+                                "categoria": _s(jp.get("occupationalCategory"))})
         texto = _texto(html)[:8000]
         # Sin JSON-LD solo damos por buena la oferta si el país aparece junto a "location/ubicación"
         # (el texto completo de la página no sirve: los menús y pies suelen listar países).
@@ -686,11 +764,34 @@ def _campo(item, nombre, fijos):
     return ""
 
 
+def _describir(datos):
+    if isinstance(datos, dict):
+        return "objeto con claves " + ", ".join(f"{k}:{type(v).__name__}" for k, v in list(datos.items())[:8])
+    return type(datos).__name__ + (f" de {len(datos)} elementos" if isinstance(datos, list) else "")
+
+
 def api_json(fuente, hoy):
+    """Pide la URL página a página (?page=N&limit=100) hasta que deja de dar ofertas nuevas."""
     fijos = fuente.get("campos", {})
-    items = _lista_de_ofertas(http(fuente["url"]))
+    sep = "&" if "?" in fuente["url"] else "?"
+    items, vistos, primera = [], set(), None
+    for pagina in range(1, 201):
+        url = fuente["url"] + (f"{sep}page={pagina}&limit=100" if fuente.get("paginar", True) else "")
+        datos = http(url)
+        primera = primera if primera is not None else datos
+        lote = [it.get("data") if isinstance(it, dict) and isinstance(it.get("data"), dict) else it
+                for it in _lista_de_ofertas(datos)]
+        nuevos = [it for it in lote if isinstance(it, dict)
+                  and json.dumps(it, sort_keys=True, default=str)[:300] not in vistos]
+        for it in nuevos:
+            vistos.add(json.dumps(it, sort_keys=True, default=str)[:300])
+        items.extend(nuevos)
+        total = datos.get("totalCount") or datos.get("total") if isinstance(datos, dict) else None
+        if not nuevos or not fuente.get("paginar", True) or (total and len(items) >= int(total)):
+            break
+        time.sleep(0.3)
     if not items:
-        raise RuntimeError("la respuesta no contiene una lista de ofertas")
+        raise RuntimeError("la respuesta no contiene una lista de ofertas (" + _describir(primera) + ")")
     ofertas = []
     for it in items:
         titulo = _campo(it, "titulo", fijos)
@@ -702,9 +803,17 @@ def api_json(fuente, hoy):
             pais = pais_de(desc[:600])  # último recurso: país mencionado al inicio de la descripción
         if not pais:
             continue
-        url = _campo(it, "url", fijos)
-        if not url and fuente.get("url_oferta"):
-            url = fuente["url_oferta"].format(id=_campo(it, "id", fijos))
+        # Enlace: el fijado a mano > la URL canónica de la oferta > plantilla con su id > cualquier campo de URL
+        meta = it.get("meta_data") if isinstance(it.get("meta_data"), dict) else {}
+        id_oferta = _campo(it, "id", fijos)
+        if "url" in fijos:
+            url = _campo(it, "url", fijos)
+        elif meta.get("canonical_url"):
+            url = meta["canonical_url"]
+        elif fuente.get("url_oferta") and id_oferta:
+            url = fuente["url_oferta"].format(id=id_oferta)
+        else:
+            url = _campo(it, "url", fijos)
         ofertas.append({
             "titulo": titulo, "empresa": fuente["empresa"],
             "ubicacion": ubic or pais_txt or pais, "otras_ubicaciones": "", "pais": pais,
