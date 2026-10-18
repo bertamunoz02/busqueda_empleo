@@ -13,6 +13,17 @@
   };
   let ofertas = [];
   let meta = {};
+
+  // Grupos de departamentos según el mapa del blog de Con B de Biología
+  // (orden y nombres de los bloques del post "Trabajar en farma").
+  const GRUPOS_DEP = [
+    { nombre: "Investigación y desarrollo (I+D)", deps: ["id"] },
+    { nombre: "Ensayos clínicos", deps: ["clinica"] },
+    { nombre: "Fabricación", deps: ["produccion", "calidad", "ingenieria"] },
+    { nombre: "Unidad de negocio", deps: ["medico", "ventas", "marketing"] },
+    { nombre: "Áreas transversales", deps: ["acceso", "regulatorios", "legal", "farmacovigilancia", "supply", "rrhh", "finanzas", "proyectos"] },
+    { nombre: "Salud digital, datos e IA", deps: ["datos", "it"] },
+  ];
   let visibles = POR_PAGINA;
 
   const normalizar = (t) => (t || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
@@ -126,21 +137,35 @@
 
   function montarControles() {
     const totales = contar(ofertas, "departamento");
-    const deps = Object.keys(meta.departamentos || {})
-      .sort((a, b) => (a === "otros") - (b === "otros") || (totales[b] || 0) - (totales[a] || 0));
+    const nombres = meta.departamentos || {};
     const cont = $("departamentos");
     cont.innerHTML = "";
     const todos = chip("Todos", () => { estado.deps.clear(); cambio(); });
     todos.dataset.dep = "";
     cont.append(todos);
-    deps.forEach((d) => {
-      const b = chip(meta.departamentos[d], () => {
+    const chipDep = (d) => {
+      const b = chip(nombres[d], () => {
         estado.deps.has(d) ? estado.deps.delete(d) : estado.deps.add(d);
         cambio();
       });
       b.dataset.dep = d;
-      cont.append(b);
+      return b;
+    };
+    // Los grupos y el orden siguen el mapa de departamentos del blog
+    // ("Trabajar en farma: un mapa para entender sus áreas y puestos").
+    // La clasificación de cada oferta no cambia: solo cómo se presentan los filtros.
+    const asignados = new Set();
+    GRUPOS_DEP.forEach((g) => {
+      const deps = g.deps.filter((d) => nombres[d]);
+      if (!deps.length) return;
+      deps.forEach((d) => asignados.add(d));
+      cont.append(grupoDep(g.nombre, deps.map(chipDep)));
     });
+    const resto = Object.keys(nombres)
+      .filter((d) => !asignados.has(d) && d !== "otros")
+      .sort((a, b) => (totales[b] || 0) - (totales[a] || 0));
+    if (nombres.otros) resto.push("otros");
+    if (resto.length) cont.append(grupoDep("Otros", resto.map(chipDep)));
 
     const paises = [...new Set(ofertas.map((o) => o.pais))].sort((a, b) =>
       (b === "España") - (a === "España") || a.localeCompare(b, "es"));
@@ -189,6 +214,22 @@
   function sincronizarSelects() {
     $("pais").value = estado.pais; $("empresa").value = estado.empresa;
     $("dias").value = estado.dias; $("orden").value = estado.orden; $("q").value = estado.q;
+  }
+
+  function grupoDep(nombre, chips) {
+    const g = document.createElement("section");
+    g.className = "dep-grupo";
+    if (nombre) {
+      const h = document.createElement("h3");
+      h.className = "dep-grupo-nombre";
+      h.textContent = nombre;
+      g.append(h);
+    }
+    const fila = document.createElement("div");
+    fila.className = "dep-grupo-chips";
+    fila.append(...chips);
+    g.append(fila);
+    return g;
   }
 
   function chip(texto, alPulsar) {

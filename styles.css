@@ -150,6 +150,14 @@ button { cursor: pointer; }
   .carril { margin-inline: 0; }
   .chips { flex-wrap: wrap; overflow: visible; padding: 0; mask-image: none; -webkit-mask-image: none; }
 }
+/* Departamentos agrupados según el mapa del blog */
+.dep-ayuda { font-size: 15px; color: var(--gris); margin: -6px 0 14px; }
+.dep-ayuda a { color: var(--acento); }
+#departamentos { flex-wrap: wrap; overflow: visible; row-gap: 6px; mask-image: none; -webkit-mask-image: none; }
+.dep-grupo { flex-basis: 100%; margin-top: 10px; }
+.dep-grupo-nombre { font-size: 13px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--acento); margin: 0 0 8px; }
+.dep-grupo-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+
 .chip {
   flex-shrink: 0; scroll-snap-align: start;
   font-size: 15px; font-weight: 500; color: var(--tinta); background: var(--blanco);

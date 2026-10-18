@@ -14,7 +14,7 @@ DEPARTAMENTOS = [
         "safety scientist", "safety physician", "case processing", "icsr", "qppv",
         "pv specialist", "pv scientist", "pv associate", "pv manager", "arzneimittelsicherheit",
         "vigilance"]),
-    ("regulatorios", "Asuntos regulatorios", [
+    ("regulatorios", "Regulatory affairs", [
         "regulatory", "cmc lifecycle", "license to operate", "regulatorio", "regulatorios", "registro sanitario", "cmc regulatory",
         "labeling", "labelling", "submission", "dossier", "zulassung", "affaires reglementaires"]),
     ("medico", "Departamento médico", [
@@ -23,7 +23,7 @@ DEPARTAMENTOS = [
         "responsable medico", "medico especialista", "medica especialista", "medical information", "informacion medica",
         "medical lead", "medical scientific", "medizinisch", "medical writer", "medical writing",
         "medical excellence", "field medical"]),
-    ("clinica", "Investigación clínica", [
+    ("clinica", "Ensayos clínicos", [
         "clinical research", "clinical associate", "clinical coordinator", "clinical delivery", "trial clinical", "study associate", "study site", "site management", "site engagement", "site payment", "site payments", "site data", "start up lead", "startup lead", "central data monitor", "clinical paediatric", "clinical pediatric", "trial lead", "global study", "country approval", "research nurse", "clinical trial", "clinical operations", "clinical study",
         "clinical project", "cra", "monitor clinico", "ensayo", "ensayos clinicos",
         "study manager", "study start", "site manager", "site activation", "trial manager",
@@ -34,7 +34,7 @@ DEPARTAMENTOS = [
         "data scientist", "data science", "real world evidence", "rwe", "epidemiolog",
         "bioinformatic", "computational biology", "machine learning", "data analyst",
         "data management", "sas programmer", "health economics", "heor", "outcomes research"]),
-    ("acceso", "Market access y precios", [
+    ("acceso", "Market access", [
         "market access", "acceso al mercado", "pricing", "reimbursement", "health technology",
         "hta", "access manager", "government affairs", "public affairs", "relaciones institucionales",
         "policy"]),
@@ -43,7 +43,7 @@ DEPARTAMENTOS = [
         "gmp compliance", "gxp", "validation", "validacion", "auditor", "audit", "deviation",
         "capa", "qualitat", "qualite", "microbiolog", "analytical chemist", "quimico analitico",
         "control de calidad", "batch release", "liberacion de lotes"]),
-    ("id", "I+D / Investigación preclínica", [
+    ("id", "Investigación y desarrollo (I+D)", [
         "research scientist", "pk analyst", "pharmacokinetic", "bioanalytic", "analytical science", "cell line", "genomics", "pathology", "laborant", "chemikant", "lab analyst", "biobanque", "biobank", "vaccins", "caracterisation", "characterization", "msat", "material expert", "scientist", "cientific", "investigador", "investigacion",
         "research associate", "discovery", "preclinical", "preclinica", "laboratory",
         "laboratorio", "lab technician", "tecnico de laboratorio", "biolog", "chemist",
@@ -52,7 +52,7 @@ DEPARTAMENTOS = [
         "r&d", "i+d", "postdoc", "post-doc", "phd", "doctorand", "assay", "in vivo", "in vitro",
         "immunolog", "oncology research", "translational", "biomarker", "cell therapy",
         "gene therapy", "forschung", "recherche", "wissenschaftl"]),
-    ("produccion", "Producción y fabricación", [
+    ("produccion", "Producción", [
         "manufacturing", "process technician", "asset lead", "asset excellence", "conducteur d appareil", "pharmacy technician", "production", "produccion", "fabricacion", "operator", "operario",
         "operador", "technician production", "tecnico de produccion", "packaging",
         "acondicionamiento", "fill finish", "aseptic", "esteril", "plant manager",
@@ -68,7 +68,7 @@ DEPARTAMENTOS = [
         "automatizacion", "facilities", "instalaciones", "hvac", "metrolog", "calibration",
         "calibracion", "technical services", "utilities", "ehs", "hse", "seguridad industrial",
         "prevencion de riesgos", "environment health"]),
-    ("supply", "Supply chain y logística", [
+    ("supply", "Logística y supply chain", [
         "supply chain", "supply planner", "planning", "planificacion", "planificador",
         "logistic", "logistica", "warehouse", "almacen", "procurement", "purchasing",
         "compras", "buyer", "sourcing", "distribution", "distribucion", "demand planner",
@@ -77,7 +77,7 @@ DEPARTAMENTOS = [
         "marketing", "brand manager", "events", "congress", "campaign", "creation digitale", "insights", "corporate affairs", "media manager", "product manager", "jefe de producto", "brand lead",
         "omnichannel", "customer experience", "launch", "lanzamiento", "communications",
         "comunicacion", "digital marketing", "content"]),
-    ("ventas", "Ventas y visita médica", [
+    ("ventas", "Comercial y visita médica", [
         "sales", "pharmareferent", "apothekenreferent", "aussendienst", "apothekenaussendienst", "medisch afgevaardigde", "afgevaardigde", "business relationship manager", "contracting and tender", "tender", "negotiation", "customer success", "community development", "customer partnering", "account specialist", "business leader", "ventas", "comercial", "key account", "kam", "account manager",
         "visitador", "delegado", "representative", "rep ", "territory", "business development",
         "desarrollo de negocio", "area manager", "vertrieb", "aussendienst", "ventes",
@@ -85,7 +85,7 @@ DEPARTAMENTOS = [
     ("legal", "Legal y compliance", [
         "legal", "lawyer", "abogad", "counsel", "compliance", "cumplimiento normativo",
         "privacy", "privacidad", "patent", "patente", "intellectual property", "ethics"]),
-    ("rrhh", "Recursos humanos", [
+    ("rrhh", "Recursos humanos y formación", [
         "human resources", "employee lifecycle", "p&c business partner", "people & culture", "benefits", "engagement & capabilities", "recursos humanos", "hr ", " hr", "people partner", "talent",
         "recruit", "seleccion", "reclutamiento", "payroll", "nomina", "learning",
         "formacion", "compensation"]),
