@@ -121,7 +121,9 @@ def normalizar(texto):
 
 # Estas palabras solo casan como palabra completa, nunca dentro de otra
 # (p. ej. "talent" no debe casar con el alemán "Punktionstalent").
-PALABRAS_EXACTAS = {"talent"}
+PALABRAS_EXACTAS = {"talent", "intern", "interns", "internship", "internships", "stage", "stages",
+                    "placement", "thesis", "apprentice", "apprentices", "trainee", "trainees"}
+# ("intern" como palabra completa: "Internal Medical Translator" o "International" ya no cuentan como prácticas)
 
 
 def _coincide(texto, palabra):
@@ -143,8 +145,8 @@ def departamento(titulo, categoria="", descripcion=""):
 
 
 NIVELES = [
-    ("practicas", ["intern", "internship", "becari", "beca", "practicas", "trainee",
-                    "praktik", "stagiaire", "stage", "apprentice", "aprendiz", "ausbildung", "duales studium", "apprentissage", "alternance", "examensarbete", "thesis", "stagiaire", "university student", "student placement", "werkstudent",
+    ("practicas", ["intern", "interns", "internship", "internships", "becari", "beca", "practicas", "trainee",
+                    "praktik", "bachelorstage", "masterstage", "stagiaire", "stage", "apprentice", "aprendiz", "ausbildung", "duales studium", "apprentissage", "alternance", "examensarbete", "thesis", "stagiaire", "university student", "student placement", "werkstudent",
                     "working student", "placement", "summer student", "co op", "coop"]),
     ("graduado", ["graduate", "recien graduado", "early career", "junior", "jr ", "entry level",
                    "programa de graduados", "assistant"]),
