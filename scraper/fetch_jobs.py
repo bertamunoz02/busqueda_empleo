@@ -880,7 +880,7 @@ LECTORES = {"workday": workday, "sitemap": sitemap, "html": listado_html, "api_j
 
 # Ofertas con más de este tiempo se consideran cerradas aunque el portal siga
 # mostrándolas (p. ej. bolsas de traductores publicadas en 2023).
-MAX_ANTIGUEDAD_DIAS = 90
+MAX_ANTIGUEDAD_DIAS = 30
 
 # Bolsa genérica de traductores autónomos de IQVIA: no es empleo farma.
 PATRON_TRADUCTORES = re.compile(r"translators?\s*/\s*linguists", re.I)
