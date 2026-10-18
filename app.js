@@ -186,6 +186,13 @@
     document.querySelectorAll("#zona button").forEach((b) => {
       b.onclick = () => { estado.zona = b.dataset.zona; estado.pais = ""; $("pais").value = ""; cambio(); };
     });
+    $("atajo-practicas").onclick = () => {
+      if (atajoActivo()) { estado.zona = ""; estado.niveles.clear(); }
+      else { estado.zona = "es"; estado.pais = ""; estado.niveles = new Set(["practicas"]); }
+      document.querySelectorAll(".casillas input").forEach((i) => (i.checked = estado.niveles.has(i.parentNode.dataset.clave)));
+      sincronizarSelects();
+      cambio();
+    };
     $("limpiar").onclick = limpiarFiltros;
     $("mas").onclick = () => { visibles += POR_PAGINA; pintar(false); };
     $("abrir-filtros").onclick = () => hojaFiltros(true);
@@ -194,6 +201,9 @@
     $("aplicar").onclick = () => { hojaFiltros(false); irAOfertas(); };
     document.addEventListener("keydown", (e) => { if (e.key === "Escape") hojaFiltros(false); });
   }
+
+  // Atajo: España + Prácticas / becas. Los departamentos y el resto de filtros se pueden sumar encima.
+  const atajoActivo = () => estado.zona === "es" && !estado.pais && estado.niveles.size === 1 && estado.niveles.has("practicas");
 
   function hojaFiltros(abrir) {
     $("panel-filtros").classList.toggle("abierto", abrir);
@@ -284,6 +294,8 @@
       b.classList.toggle("cero", n === 0);
       b.setAttribute("aria-pressed", d ? estado.deps.has(d) : estado.deps.size === 0);
     });
+    $("atajo-practicas").setAttribute("aria-pressed", atajoActivo());
+    $("atajo-cuenta").textContent = fmt(ofertas.filter((o) => o.pais === "España" && o.nivel === "practicas").length);
     cuentasCasillas("nivel", contar(ofertas.filter((o) => cumple(o, "nivel")), "nivel"));
     document.querySelectorAll("#zona button").forEach((b) =>
       b.setAttribute("aria-pressed", b.dataset.zona === estado.zona && !estado.pais

@@ -158,6 +158,12 @@ button { cursor: pointer; }
 .dep-grupo-nombre { font-size: 13px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--acento); margin: 0 0 8px; }
 .dep-grupo-chips { display: flex; flex-wrap: wrap; gap: 8px; }
 
+/* Atajo: solo prácticas y becas en España */
+.atajo { margin: 0 0 18px; }
+.chip-atajo { font-weight: 600; box-shadow: inset 0 0 0 2px var(--acento); color: var(--acento); }
+.chip-atajo .cuenta { color: var(--acento); font-weight: 600; }
+.atajo-ayuda { font-size: 14px; color: var(--gris); margin: 8px 0 0; }
+
 .chip {
   flex-shrink: 0; scroll-snap-align: start;
   font-size: 15px; font-weight: 500; color: var(--tinta); background: var(--blanco);
