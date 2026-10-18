@@ -303,6 +303,7 @@ select {
 .fuentes-detalle p { margin-bottom: 12px; line-height: 1.55; }
 .fuentes { columns: 2 200px; padding-left: 18px; margin: 0 0 14px; font-size: 13px; }
 .fuentes .ko { color: #9A3412; }
+.fuentes a { color: var(--acento); font-weight: 500; }
 .firma-red { display: flex; flex-direction: column; align-items: center; gap: 8px; margin-top: 24px; }
 .firma-red-titulo { font-family: var(--serif); font-style: italic; font-size: 14px; color: var(--gris-claro); }
 .firma-red-enlaces { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
