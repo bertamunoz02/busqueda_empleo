@@ -1,17 +1,17 @@
 {
- "actualizado": "2026-10-18T09:35+00:00",
+ "actualizado": "2026-10-18T11:04+00:00",
  "fuentes": [
   {
    "empresa": "IQVIA",
    "tipo": "workday",
    "ok": true,
-   "ofertas": 816
+   "ofertas": 819
   },
   {
    "empresa": "Pfizer",
    "tipo": "workday",
    "ok": true,
-   "ofertas": 68
+   "ofertas": 72
   },
   {
    "empresa": "Amgen",
@@ -23,7 +23,7 @@
    "empresa": "Bristol Myers Squibb",
    "tipo": "workday",
    "ok": true,
-   "ofertas": 82
+   "ofertas": 58
   },
   {
    "empresa": "MSD",
@@ -41,19 +41,19 @@
    "empresa": "Roche",
    "tipo": "sitemap",
    "ok": true,
-   "ofertas": 491
+   "ofertas": 537
   },
   {
    "empresa": "GSK",
    "tipo": "sitemap",
    "ok": true,
-   "ofertas": 176
+   "ofertas": 185
   },
   {
    "empresa": "Thermo Fisher (PPD)",
    "tipo": "sitemap",
    "ok": true,
-   "ofertas": 129
+   "ofertas": 164
   },
   {
    "empresa": "Labcorp",
@@ -71,13 +71,13 @@
    "empresa": "Merck KGaA",
    "tipo": "sitemap",
    "ok": true,
-   "ofertas": 199
+   "ofertas": 214
   },
   {
    "empresa": "Eli Lilly",
    "tipo": "sitemap",
    "ok": true,
-   "ofertas": 67
+   "ofertas": 73
   },
   {
    "empresa": "AstraZeneca",
@@ -89,7 +89,7 @@
    "empresa": "Sanofi",
    "tipo": "html",
    "ok": true,
-   "ofertas": 342
+   "ofertas": 340
   },
   {
    "empresa": "Parexel",
@@ -101,20 +101,19 @@
    "empresa": "Takeda",
    "tipo": "html",
    "ok": true,
-   "ofertas": 288
+   "ofertas": 275
   },
   {
    "empresa": "ICON",
    "tipo": "html",
    "ok": true,
-   "ofertas": 94
+   "ofertas": 93
   },
   {
    "empresa": "Novartis",
    "tipo": "html",
-   "ok": false,
-   "error": "TypeError: sequence item 1: expected str instance, list found",
-   "conservadas": 0
+   "ok": true,
+   "ofertas": 72
   },
   {
    "empresa": "BioMarin",
@@ -125,9 +124,12 @@
   {
    "empresa": "Medpace",
    "tipo": "api_json",
-   "ok": false,
-   "error": "RuntimeError: la respuesta no contiene una lista de ofertas",
-   "conservadas": 0
+   "ok": true,
+   "ofertas": 294
   }
- ]
+ ],
+ "descartadas": {
+  "publicada hace más de 365 días": 46,
+  "bolsa de traductores": 134
+ }
 }

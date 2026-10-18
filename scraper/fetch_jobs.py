@@ -88,7 +88,7 @@ CIUDADES = {
 # Para no confundir Cambridge (MA), Valencia (Venezuela), Guadalajara (México)...
 NO_EUROPA = re.compile(r"\b(united states|usa|u\.s\.|estados unidos|canada|mexico|méxico|brazil|brasil|"
                        r"argentina|colombia|chile|peru|perú|venezuela|nicaragua|china|japan|india|"
-                       r"singapore|australia|korea|philippines|filipinas|south africa|puerto rico|"
+                       r"singapore|australia|korea|philippines|filipinas|south africa|puerto rico|jalisco|ciudad de mexico|"
                        r"massachusetts|new jersey|california|pennsylvania|north carolina|texas|illinois)\b")
 
 # Códigos de estado de EE. UU. que no son también códigos de país europeos
@@ -885,6 +885,9 @@ MAX_ANTIGUEDAD_DIAS = 365
 # Bolsa genérica de traductores autónomos de IQVIA: no es empleo farma.
 PATRON_TRADUCTORES = re.compile(r"translators?\s*/\s*linguists", re.I)
 
+# "Save for Later" de Sanofi: bolsas de talento sin vacante concreta.
+PATRON_SAVE_FOR_LATER = re.compile(r"^\s*save for later\b", re.I)
+
 
 def limpiar_titulo(t):
     """Quita restos del portal como el prefijo 'Job Posting Title' de Workday."""
@@ -894,6 +897,8 @@ def limpiar_titulo(t):
 def motivo_descarte(o, hoy):
     if PATRON_TRADUCTORES.search(o.get("titulo") or ""):
         return "bolsa de traductores"
+    if PATRON_SAVE_FOR_LATER.search(o.get("titulo") or "") or PATRON_SAVE_FOR_LATER.search(o.get("ubicacion") or ""):
+        return "bolsa 'Save for Later'"
     f = (o.get("fecha") or "")[:10]
     if f:
         try:
