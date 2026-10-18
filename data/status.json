@@ -1,11 +1,11 @@
 {
- "actualizado": "2026-10-17T18:27+00:00",
+ "actualizado": "2026-10-18T09:35+00:00",
  "fuentes": [
   {
    "empresa": "IQVIA",
    "tipo": "workday",
    "ok": true,
-   "ofertas": 813
+   "ofertas": 816
   },
   {
    "empresa": "Pfizer",
@@ -23,13 +23,13 @@
    "empresa": "Bristol Myers Squibb",
    "tipo": "workday",
    "ok": true,
-   "ofertas": 83
+   "ofertas": 82
   },
   {
    "empresa": "MSD",
    "tipo": "workday",
    "ok": true,
-   "ofertas": 59
+   "ofertas": 58
   },
   {
    "empresa": "Evotec",
@@ -41,25 +41,25 @@
    "empresa": "Roche",
    "tipo": "sitemap",
    "ok": true,
-   "ofertas": 440
+   "ofertas": 491
   },
   {
    "empresa": "GSK",
    "tipo": "sitemap",
    "ok": true,
-   "ofertas": 0
+   "ofertas": 176
   },
   {
    "empresa": "Thermo Fisher (PPD)",
    "tipo": "sitemap",
    "ok": true,
-   "ofertas": 75
+   "ofertas": 129
   },
   {
    "empresa": "Labcorp",
    "tipo": "sitemap",
    "ok": true,
-   "ofertas": 44
+   "ofertas": 37
   },
   {
    "empresa": "Fortrea",
@@ -83,13 +83,13 @@
    "empresa": "AstraZeneca",
    "tipo": "html",
    "ok": true,
-   "ofertas": 244
+   "ofertas": 240
   },
   {
    "empresa": "Sanofi",
    "tipo": "html",
    "ok": true,
-   "ofertas": 346
+   "ofertas": 342
   },
   {
    "empresa": "Parexel",
@@ -101,7 +101,7 @@
    "empresa": "Takeda",
    "tipo": "html",
    "ok": true,
-   "ofertas": 289
+   "ofertas": 288
   },
   {
    "empresa": "ICON",
