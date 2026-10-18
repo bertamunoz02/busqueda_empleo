@@ -9,7 +9,7 @@
 
   const estado = {
     deps: new Set(), zona: "", pais: "", empresa: "",
-    niveles: new Set(), modalidades: new Set(), dias: "", q: "", orden: "fecha",
+    niveles: new Set(), dias: "", q: "", orden: "fecha",
   };
   let ofertas = [];
   let meta = {};
@@ -113,7 +113,6 @@
     if (estado.pais && o.pais !== estado.pais) return false;
     if (estado.empresa && o.empresa !== estado.empresa) return false;
     if (ignorar !== "nivel" && estado.niveles.size && !estado.niveles.has(o.nivel)) return false;
-    if (ignorar !== "modalidad" && estado.modalidades.size && !estado.modalidades.has(o.modalidad)) return false;
     if (estado.dias) {
       if (!o.fecha) return false;
       if (diasDesde(o.fecha) > Number(estado.dias)) return false;
@@ -151,7 +150,6 @@
     sincronizarSelects();
 
     casillas($("nivel"), meta.niveles || {}, estado.niveles, ["practicas", "graduado", "intermedio", "senior", "direccion"]);
-    casillas($("modalidad"), meta.modalidades || {}, estado.modalidades, ["presencial", "hibrido", "remoto", "sin_indicar"]);
 
     let espera;
     $("q").oninput = (e) => { clearTimeout(espera); espera = setTimeout(() => { estado.q = e.target.value.trim(); cambio(); }, 200); };
@@ -181,7 +179,7 @@
 
   function limpiarFiltros() {
     Object.assign(estado, { zona: "", pais: "", empresa: "", dias: "", q: "" });
-    estado.niveles.clear(); estado.modalidades.clear();
+    estado.niveles.clear();
     $("q").value = "";
     document.querySelectorAll(".casillas input").forEach((i) => (i.checked = false));
     sincronizarSelects();
@@ -246,13 +244,12 @@
       b.setAttribute("aria-pressed", d ? estado.deps.has(d) : estado.deps.size === 0);
     });
     cuentasCasillas("nivel", contar(ofertas.filter((o) => cumple(o, "nivel")), "nivel"));
-    cuentasCasillas("modalidad", contar(ofertas.filter((o) => cumple(o, "modalidad")), "modalidad"));
     document.querySelectorAll("#zona button").forEach((b) =>
       b.setAttribute("aria-pressed", b.dataset.zona === estado.zona && !estado.pais
         || (b.dataset.zona === "es" && estado.pais === "España")));
 
     const activos = [estado.zona || estado.pais, estado.empresa, estado.dias].filter(Boolean).length
-      + estado.niveles.size + estado.modalidades.size;
+      + estado.niveles.size;
     $("n-filtros").hidden = !activos;
     $("n-filtros").textContent = activos;
 
@@ -291,7 +288,7 @@
       const b = document.createElement("button");
       b.type = "button"; b.className = "quitar"; b.textContent = texto;
       b.setAttribute("aria-label", `Quitar filtro ${texto}`);
-      b.onclick = () => { quitar(); sincronizarSelects(); document.querySelectorAll(".casillas input").forEach((i) => (i.checked = estado.niveles.has(i.parentNode.dataset.clave) || estado.modalidades.has(i.parentNode.dataset.clave))); cambio(); };
+      b.onclick = () => { quitar(); sincronizarSelects(); document.querySelectorAll(".casillas input").forEach((i) => (i.checked = estado.niveles.has(i.parentNode.dataset.clave))); cambio(); };
       cont.append(b);
     };
     if (estado.q) pastilla(`«${estado.q}»`, () => (estado.q = ""));
@@ -299,7 +296,6 @@
     if (estado.pais) pastilla(estado.pais, () => (estado.pais = ""));
     if (estado.empresa) pastilla(estado.empresa, () => (estado.empresa = ""));
     estado.niveles.forEach((k) => pastilla(meta.niveles[k], () => estado.niveles.delete(k)));
-    estado.modalidades.forEach((k) => pastilla(meta.modalidades[k], () => estado.modalidades.delete(k)));
     if (estado.dias) pastilla({ 1: "Últimas 24 h", 7: "Última semana", 30: "Último mes" }[estado.dias], () => (estado.dias = ""));
   }
 
@@ -394,7 +390,6 @@
     if (estado.pais) p.set("pais", estado.pais);
     if (estado.empresa) p.set("empresa", estado.empresa);
     if (estado.niveles.size) p.set("nivel", [...estado.niveles].join(","));
-    if (estado.modalidades.size) p.set("modalidad", [...estado.modalidades].join(","));
     if (estado.dias) p.set("dias", estado.dias);
     if (estado.q) p.set("q", estado.q);
     if (estado.orden !== "fecha") p.set("orden", estado.orden);
@@ -407,7 +402,6 @@
     const lista = (k) => (p.get(k) || "").split(",").filter(Boolean);
     estado.deps = new Set(lista("dep"));
     estado.niveles = new Set(lista("nivel"));
-    estado.modalidades = new Set(lista("modalidad"));
     estado.zona = p.get("zona") || "";
     estado.pais = p.get("pais") || "";
     estado.empresa = p.get("empresa") || "";
