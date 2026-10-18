@@ -84,7 +84,8 @@ DEPARTAMENTOS = [
         "delegue", "customer engagement", "hospital specialist", "specialty manager"]),
     ("legal", "Legal y compliance", [
         "legal", "lawyer", "abogad", "counsel", "compliance", "cumplimiento normativo",
-        "privacy", "privacidad", "patent", "patente", "intellectual property", "ethics"]),
+        "privacy counsel", "privacy officer", "data privacy", "data protection",
+        "proteccion de datos", "patent", "patente", "intellectual property", "ethics"]),
     ("rrhh", "Recursos humanos y formación", [
         "human resources", "employee lifecycle", "p&c business partner", "people & culture", "benefits", "engagement & capabilities", "recursos humanos", "hr ", " hr", "people partner", "talent",
         "recruit", "seleccion", "reclutamiento", "payroll", "nomina", "learning",
@@ -118,9 +119,14 @@ def normalizar(texto):
     return " " + re.sub(r"\s+", " ", texto).strip() + " "
 
 
+# Estas palabras solo casan como palabra completa, nunca dentro de otra
+# (p. ej. "talent" no debe casar con el alemán "Punktionstalent").
+PALABRAS_EXACTAS = {"talent"}
+
+
 def _coincide(texto, palabra):
     p = normalizar(palabra).strip()
-    if len(p) <= 4:  # siglas cortas (qa, msl, cra, it...) deben ir como palabra completa
+    if len(p) <= 4 or p in PALABRAS_EXACTAS:  # siglas cortas (qa, msl, cra, it...) deben ir como palabra completa
         return re.search(r"(?<![a-z0-9])" + re.escape(p) + r"(?![a-z0-9])", texto) is not None
     return p in texto
 
