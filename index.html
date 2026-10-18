@@ -2,41 +2,125 @@
 <html lang="es">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Vacantes Farma</title>
-  <meta name="description" content="Ofertas de empleo abiertas en la industria farmacéutica en España y Europa, filtradas por departamento.">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Empleo farma · Con B de Biología</title>
+  <meta name="description" content="Las ofertas de empleo abiertas hoy en la industria farmacéutica de España y Europa, por departamento. Se actualiza cada día.">
+  <meta name="author" content="Con B de Biología">
+  <meta name="copyright" content="© 2026 Con B de Biología">
+  <meta name="theme-color" content="#131B2E">
+  <link rel="canonical" href="https://bertamunoz02.github.io/busqueda_empleo/">
+  <meta property="og:title" content="¿Dónde se está contratando ahora en farma?">
+  <meta property="og:description" content="Ofertas abiertas hoy en laboratorios de España y Europa, filtradas por departamento.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://bertamunoz02.github.io/busqueda_empleo/">
+  <meta property="og:site_name" content="Con B de Biología">
+  <meta property="og:locale" content="es_ES">
+  <meta name="twitter:card" content="summary">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23131B2E'/><circle cx='14' cy='14' r='6.5' fill='none' stroke='%23F0A6BB' stroke-width='2.4'/><path d='M19 19l6 6' stroke='%23F0A6BB' stroke-width='2.6' stroke-linecap='round'/></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Schibsted+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <header class="cabecera">
-    <div class="contenedor">
-      <p class="marca">Vacantes<span>Farma</span></p>
-      <h1>Puestos abiertos en la industria farmacéutica, por departamento</h1>
-      <p class="entradilla">Reunimos cada día las ofertas publicadas en las webs de empleo de los laboratorios, en España y el resto de Europa. Elige un departamento y afina con los filtros.</p>
+  <!-- ===================== PORTADA ===================== -->
+  <header class="portada">
+    <div class="ancho">
+      <div class="barra">
+        <a class="marca" href="https://bertamunoz02.github.io/blog/">Con B de Biología</a>
+        <span class="sello">buscador de <b>empleo farma</b></span>
+      </div>
+      <div class="portada-rejilla">
+        <div class="portada-texto">
+          <h1 class="titular">¿Dónde se está contratando <em>ahora mismo</em>?</h1>
+          <p class="entradilla">Las ofertas abiertas hoy en la industria farmacéutica de España y Europa, reunidas en un solo sitio y ordenadas por departamento.</p>
+          <dl class="cifras" id="cifras">
+            <div><dt>ofertas abiertas</dt><dd id="c-ofertas">—</dd></div>
+            <div><dt>laboratorios</dt><dd id="c-empresas">—</dd></div>
+            <div><dt>países</dt><dd id="c-paises">—</dd></div>
+            <div><dt>en España</dt><dd id="c-espana">—</dd></div>
+          </dl>
+          <label class="buscador">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+            <span class="visualmente-oculto">Buscar ofertas</span>
+            <input id="q" type="search" placeholder="Busca un puesto: MSL, CRA, calidad, oncología…" autocomplete="off" enterkeyhint="search">
+          </label>
+        </div>
+        <svg class="dibujo" viewBox="0 0 360 320" role="img" aria-label="Tres puertas con carteles de departamentos: Clínica, Regulatorio y Calidad; la del medio está abierta y sale luz">
+          <defs>
+            <radialGradient id="luz" cx="50%" cy="100%" r="80%"><stop offset="0" stop-color="#FFF4F6"/><stop offset=".6" stop-color="#F3DCE2"/><stop offset="1" stop-color="#F0A6BB"/></radialGradient>
+            <linearGradient id="haz" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F0A6BB" stop-opacity=".55"/><stop offset="1" stop-color="#F0A6BB" stop-opacity="0"/></linearGradient>
+          </defs>
+          <ellipse cx="180" cy="290" rx="170" ry="16" fill="#F0A6BB" fill-opacity=".14"/>
+          <path d="M140 266 H220 L268 318 H92 Z" fill="url(#haz)"/>
+          
+              <rect x="11" y="83" width="94" height="183" rx="4" fill="#E8D9C4" stroke="#0B1020" stroke-width="2.5"/>
+              <rect x="18" y="90" width="80" height="176" rx="2" fill="#2F5D48" stroke="#0B1020" stroke-width="2.5"/>
+              <rect x="30" y="104" width="56" height="62" rx="3" fill="none" stroke="#0B1020" stroke-opacity=".35" stroke-width="2"/>
+              <rect x="30" y="180" width="56" height="70" rx="3" fill="none" stroke="#0B1020" stroke-opacity=".35" stroke-width="2"/>
+              <circle cx="86" cy="176" r="4.5" fill="#E8D9C4" stroke="#0B1020" stroke-width="2"/>
+              <g transform="rotate(-3 58 60)"><rect x="20" y="46" width="76" height="28" rx="6" fill="#F7F3EA" stroke="#0B1020" stroke-width="2.5"/>
+              <text x="58" y="65.5" text-anchor="middle" font-family="Newsreader, Georgia, serif" font-style="italic" font-size="15" fill="#131B2E">Clínica</text></g>
+          <rect x="133" y="83" width="94" height="183" rx="4" fill="#E8D9C4" stroke="#0B1020" stroke-width="2.5"/>
+          <rect x="140" y="90" width="80" height="176" rx="2" fill="url(#luz)" stroke="#0B1020" stroke-width="2.5"/>
+          <path d="M140 90 L112 80 L112 278 L140 266 Z" fill="#B04468" stroke="#0B1020" stroke-width="2.5" stroke-linejoin="round"/>
+          <circle cx="119" cy="180" r="4" fill="#E8D9C4" stroke="#0B1020" stroke-width="2"/>
+          <g transform="rotate(2 180 60)"><rect x="136" y="46" width="88" height="28" rx="6" fill="#F7F3EA" stroke="#0B1020" stroke-width="2.5"/>
+          <text x="180" y="65.5" text-anchor="middle" font-family="Newsreader, Georgia, serif" font-style="italic" font-size="15" fill="#131B2E">Regulatorio</text></g>
+          
+              <rect x="255" y="83" width="94" height="183" rx="4" fill="#E8D9C4" stroke="#0B1020" stroke-width="2.5"/>
+              <rect x="262" y="90" width="80" height="176" rx="2" fill="#B5532F" stroke="#0B1020" stroke-width="2.5"/>
+              <rect x="274" y="104" width="56" height="62" rx="3" fill="none" stroke="#0B1020" stroke-opacity=".35" stroke-width="2"/>
+              <rect x="274" y="180" width="56" height="70" rx="3" fill="none" stroke="#0B1020" stroke-opacity=".35" stroke-width="2"/>
+              <circle cx="330" cy="176" r="4.5" fill="#E8D9C4" stroke="#0B1020" stroke-width="2"/>
+              <g transform="rotate(4 302 60)"><rect x="264" y="46" width="76" height="28" rx="6" fill="#F7F3EA" stroke="#0B1020" stroke-width="2.5"/>
+              <text x="302" y="65.5" text-anchor="middle" font-family="Newsreader, Georgia, serif" font-style="italic" font-size="15" fill="#131B2E">Calidad</text></g>
+          <g fill="#F0A6BB" opacity=".9"><path d="M180 20 l3 8 8 3 -8 3 -3 8 -3 -8 -8 -3 8 -3z"/><path d="M128 30 l2 5 5 2 -5 2 -2 5 -2 -5 -5 -2 5 -2z" opacity=".7"/><path d="M234 26 l2 5 5 2 -5 2 -2 5 -2 -5 -5 -2 5 -2z" opacity=".7"/></g>
+        </svg>
+      </div>
     </div>
+    <div class="mural" id="mural" aria-hidden="true"></div>
   </header>
 
-  <main class="contenedor">
-    <section class="paso" aria-labelledby="t-dep">
-      <h2 id="t-dep"><span class="num">1</span> ¿Qué departamento te interesa?</h2>
-      <div id="departamentos" class="chips" role="group" aria-label="Departamentos"></div>
+  <main>
+    <!-- ===================== EL SECTOR HOY ===================== -->
+    <section class="sector ancho" aria-labelledby="t-sector">
+      <div class="seccion-cabecera">
+        <h2 id="t-sector" class="seccion-titulo">El sector, hoy</h2>
+        <p class="seccion-nota">Toca una barra para ver esas ofertas<span class="solo-movil"> · desliza para ver más</span>.</p>
+      </div>
+      <div class="graficos">
+        <article class="grafico">
+          <h3>Dónde se contrata</h3>
+          <ol class="barras" id="g-paises"></ol>
+        </article>
+        <article class="grafico">
+          <h3>Quién contrata más</h3>
+          <ol class="barras" id="g-empresas"></ol>
+        </article>
+        <article class="grafico">
+          <h3>Qué perfiles se buscan</h3>
+          <ol class="barras" id="g-departamentos"></ol>
+        </article>
+      </div>
     </section>
 
-    <div class="cuerpo">
-      <aside class="filtros" aria-labelledby="t-fil">
-        <button class="abrir-filtros" type="button" aria-expanded="false" aria-controls="panel-filtros">
-          Filtros <span id="n-filtros" class="contador-filtros" hidden></span>
-        </button>
-        <div id="panel-filtros" class="panel-filtros">
-          <h2 id="t-fil"><span class="num">2</span> Afina la búsqueda</h2>
+    <!-- ===================== BUSCADOR ===================== -->
+    <section class="buscar ancho" id="ofertas" aria-labelledby="t-dep">
+      <div class="seccion-cabecera">
+        <h2 id="t-dep" class="seccion-titulo">¿Qué departamento te interesa?</h2>
+      </div>
+      <div class="carril">
+        <div id="departamentos" class="chips" role="group" aria-label="Departamentos"></div>
+      </div>
 
-          <label class="campo">
-            <span>Palabras clave</span>
-            <input id="q" type="search" placeholder="p. ej. oncología, MSL, vacunas" autocomplete="off">
-          </label>
+      <div class="cuerpo">
+        <div class="hoja-fondo" id="fondo-filtros" hidden></div>
+        <aside class="filtros" id="panel-filtros" aria-labelledby="t-fil">
+          <div class="filtros-cabecera">
+            <h2 id="t-fil">Afina la búsqueda</h2>
+            <button class="cerrar" id="cerrar-filtros" type="button" aria-label="Cerrar filtros">×</button>
+          </div>
 
           <fieldset class="campo">
             <legend>Dónde</legend>
@@ -73,50 +157,76 @@
             </select>
           </label>
 
-          <button id="limpiar" class="boton-secundario" type="button">Quitar filtros</button>
-        </div>
-      </aside>
+          <div class="filtros-pie">
+            <button id="limpiar" class="boton secundario" type="button">Quitar filtros</button>
+            <button id="aplicar" class="boton" type="button">Ver ofertas</button>
+          </div>
+        </aside>
 
-      <section class="resultados" aria-live="polite" aria-labelledby="t-res">
-        <div class="barra-resultados">
-          <h2 id="t-res"><span id="n-res">—</span></h2>
-          <label class="orden">Ordenar
-            <select id="orden">
-              <option value="fecha">Más recientes</option>
-              <option value="empresa">Empresa (A–Z)</option>
-            </select>
-          </label>
-        </div>
-        <ol id="lista" class="lista"></ol>
-        <p id="vacio" class="vacio" hidden></p>
-        <button id="mas" class="boton" type="button" hidden>Ver más ofertas</button>
-      </section>
-    </div>
+        <section class="resultados" aria-labelledby="t-res">
+          <div class="barra-resultados">
+            <h2 id="t-res" aria-live="polite"><span id="n-res">—</span></h2>
+            <div class="acciones">
+              <button class="abrir-filtros" id="abrir-filtros" type="button">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4"/></svg>
+                Filtros <span id="n-filtros" class="contador-filtros" hidden></span>
+              </button>
+              <label class="orden"><span class="visualmente-oculto">Ordenar</span>
+                <select id="orden">
+                  <option value="fecha">Más recientes</option>
+                  <option value="empresa">Empresa (A–Z)</option>
+                </select>
+              </label>
+            </div>
+          </div>
+          <div id="activos" class="activos"></div>
+          <ol id="lista" class="lista"></ol>
+          <div id="vacio" class="vacio" hidden></div>
+          <button id="mas" class="boton secundario mas" type="button" hidden>Ver más ofertas</button>
+        </section>
+      </div>
+    </section>
   </main>
 
   <footer class="pie">
-    <div class="contenedor">
-      <p id="actualizado">Cargando ofertas…</p>
-      <details>
-        <summary>Fuentes consultadas</summary>
+    <div class="ancho">
+      <p id="actualizado" class="actualizado">Cargando ofertas…</p>
+      <details class="fuentes-detalle">
+        <summary>¿De dónde salen las ofertas?</summary>
+        <p>Cada mañana se leen las webs de empleo de estos laboratorios y se guardan las ofertas de España y del resto de Europa. Cada oferta enlaza a la web original, donde se gestiona la candidatura. El departamento se asigna automáticamente a partir del título, así que puede haber alguna despistada.</p>
         <ul id="fuentes" class="fuentes"></ul>
       </details>
-      <p class="aviso">Las ofertas pertenecen a cada empresa y se enlazan a su web original, donde se gestiona la candidatura. La clasificación por departamento es automática y puede no ser exacta.</p>
+      <div class="firma-red">
+        <p class="firma-red-titulo">Más en Con B de Biología</p>
+        <nav class="firma-red-enlaces" aria-label="Con B de Biología">
+          <a href="https://bertamunoz02.github.io/salidas-cientificas/">Test de salidas</a>
+          <a href="https://bertamunoz02.github.io/blog/">Blog</a>
+          <a href="https://www.instagram.com/bertamunoz_02/" target="_blank" rel="noopener">Instagram</a>
+          <a href="https://www.tiktok.com/@bertamunoz_02" target="_blank" rel="noopener">TikTok</a>
+        </nav>
+        <p class="firma">© <span id="anio">2026</span> Con B de Biología</p>
+      </div>
     </div>
   </footer>
 
   <template id="tpl-oferta">
     <li class="oferta">
-      <div class="oferta-cab">
-        <span class="etiqueta dep"></span>
-        <time class="fecha"></time>
-      </div>
-      <h3><a class="titulo" target="_blank" rel="noopener"></a></h3>
-      <p class="meta"><span class="empresa"></span><span class="lugar"></span></p>
-      <p class="extra"></p>
+      <a class="oferta-enlace" target="_blank" rel="noopener">
+        <span class="avatar" aria-hidden="true"></span>
+        <span class="oferta-cuerpo">
+          <span class="oferta-cab">
+            <span class="empresa"></span>
+            <span class="fecha"></span>
+          </span>
+          <span class="titulo"></span>
+          <span class="lugar"></span>
+          <span class="etiquetas"></span>
+        </span>
+      </a>
     </li>
   </template>
 
   <script src="app.js"></script>
+  <script data-goatcounter="https://bertamunoz02-blog.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>

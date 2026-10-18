@@ -2,7 +2,10 @@
   "use strict";
 
   const POR_PAGINA = 30;
+  const TEST_URL = "https://bertamunoz02.github.io/salidas-cientificas/";
   const $ = (id) => document.getElementById(id);
+  // Colores de la marca para los avatares de empresa (cada empresa conserva siempre el suyo)
+  const COLORES = ["#131B2E", "#2F5D48", "#B04468", "#B5532F", "#8F3555", "#3A2D5A", "#1E2A4A", "#5A3F48"];
 
   const estado = {
     deps: new Set(), zona: "", pais: "", empresa: "",
@@ -13,28 +16,96 @@
   let visibles = POR_PAGINA;
 
   const normalizar = (t) => (t || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
-  const fmtNum = (n) => n.toLocaleString("es-ES");
+  const fmt = (n) => String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  const nombreDep = (d) => (meta.departamentos || {})[d] || d;
+  const contar = (lista, campo) => lista.reduce((m, o) => (m[o[campo]] = (m[o[campo]] || 0) + 1, m), {});
+  const ordenar = (cuentas) => Object.entries(cuentas).sort((a, b) => b[1] - a[1]);
 
-  // ---------- Carga
+  // ---------------------------------------------------------------- carga
   async function cargar() {
+    $("anio").textContent = new Date().getFullYear();
     try {
       const r = await fetch("data/jobs.json", { cache: "no-cache" });
       const datos = await r.json();
       meta = datos.meta || {};
       ofertas = (datos.ofertas || []).map((o) => ({
         ...o,
-        _texto: normalizar([o.titulo, o.empresa, o.ubicacion, o.otras_ubicaciones, o.descripcion].join(" ")),
+        _texto: normalizar([o.titulo, o.empresa, o.ubicacion, o.otras_ubicaciones, o.descripcion, nombreDep(o.departamento)].join(" ")),
       }));
     } catch (e) {
       ofertas = [];
     }
     leerHash();
+    pintarPortada();
     montarControles();
+    pintarGraficos();
     pintar();
     pintarPie();
   }
 
-  // ---------- Filtros
+  // ---------------------------------------------------------------- portada
+  function pintarPortada() {
+    const empresas = new Set(ofertas.map((o) => o.empresa));
+    const paises = new Set(ofertas.map((o) => o.pais));
+    $("c-ofertas").textContent = fmt(ofertas.length);
+    $("c-empresas").textContent = fmt(empresas.size);
+    $("c-paises").textContent = fmt(paises.size);
+    $("c-espana").textContent = fmt(ofertas.filter((o) => o.pais === "España").length);
+
+    // Franjas con títulos reales de hoy (cortos, sin repetir)
+    const titulos = [...new Set(ofertas.map((o) => o.titulo.replace(/\s*\((m\/w\/d|m\/f\/d|f\/m\/d|all genders|h\/f|w\/m\/d)\)\s*/gi, " ").trim()))]
+      .filter((t) => t.length > 6 && t.length < 44);
+    if (titulos.length < 12) { $("mural").hidden = true; return; }
+    const mezcla = titulos.sort(() => Math.random() - .5).slice(0, 60);
+    const filas = [0, 1].map((f) => mezcla.filter((_, i) => i % 2 === f));
+    $("mural").innerHTML = filas.map((lista, k) => {
+      const c = lista.map((n) => `<span>${escapar(n)}</span>`).join("");
+      return `<div class="franja ${k % 2 ? "inversa" : ""}" style="--dur:${150 + k * 30}s"><div class="pista">${c}${c}</div></div>`;
+    }).join("");
+  }
+
+  // ---------------------------------------------------------------- el sector hoy
+  function pintarGraficos() {
+    const grafico = (id, cuentas, alPulsar, activo, propio, etiqueta = (k) => k, max = 7) => {
+      const filas = ordenar(cuentas).slice(0, max);
+      const tope = filas.length ? filas[0][1] : 1;
+      const ol = $(id);
+      ol.innerHTML = "";
+      filas.forEach(([k, n]) => {
+        const li = document.createElement("li");
+        const b = document.createElement("button");
+        b.type = "button";
+        b.className = "barra-dato" + (propio(k) ? " propia" : "");
+        b._activo = () => activo(k);
+        b.setAttribute("aria-pressed", activo(k));
+        b.title = `${etiqueta(k)}: ${fmt(n)} ofertas`;
+        b.innerHTML = `<span class="nombre"></span><span class="riel"><span></span></span><span class="valor">${fmt(n)}</span>`;
+        b.querySelector(".nombre").textContent = etiqueta(k);
+        b.onclick = () => { alPulsar(k); irAOfertas(); };
+        li.append(b);
+        ol.append(li);
+        requestAnimationFrame(() => requestAnimationFrame(() => {
+          b.querySelector(".riel > span").style.width = `${Math.max(3, (n / tope) * 100)}%`;
+        }));
+      });
+    };
+    grafico("g-paises", contar(ofertas, "pais"),
+      (k) => { estado.pais = estado.pais === k ? "" : k; estado.zona = ""; sincronizarSelects(); cambio(); },
+      (k) => estado.pais === k, (k) => k === "España");
+    grafico("g-empresas", contar(ofertas, "empresa"),
+      (k) => { estado.empresa = estado.empresa === k ? "" : k; sincronizarSelects(); cambio(); },
+      (k) => estado.empresa === k, () => false);
+    const deps = contar(ofertas.filter((o) => o.departamento !== "otros"), "departamento");
+    grafico("g-departamentos", deps,
+      (k) => { estado.deps = new Set(estado.deps.has(k) && estado.deps.size === 1 ? [] : [k]); cambio(); },
+      (k) => estado.deps.has(k), () => false, nombreDep);
+  }
+
+  function irAOfertas() {
+    $("ofertas").scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+  }
+
+  // ---------------------------------------------------------------- filtros
   function cumple(o, ignorar) {
     if (ignorar !== "dep" && estado.deps.size && !estado.deps.has(o.departamento)) return false;
     if (estado.zona === "es" && o.pais !== "España") return false;
@@ -45,8 +116,7 @@
     if (ignorar !== "modalidad" && estado.modalidades.size && !estado.modalidades.has(o.modalidad)) return false;
     if (estado.dias) {
       if (!o.fecha) return false;
-      const limite = Date.now() - Number(estado.dias) * 86400000 - 86400000;
-      if (new Date(o.fecha).getTime() < limite) return false;
+      if (diasDesde(o.fecha) > Number(estado.dias)) return false;
     }
     if (estado.q) {
       const terminos = normalizar(estado.q).split(/\s+/).filter(Boolean);
@@ -55,45 +125,37 @@
     return true;
   }
 
-  const contar = (lista, campo) => lista.reduce((m, o) => (m[o[campo]] = (m[o[campo]] || 0) + 1, m), {});
-
-  // ---------- Controles
   function montarControles() {
-    // Departamentos, ordenados por número de ofertas
     const totales = contar(ofertas, "departamento");
     const deps = Object.keys(meta.departamentos || {})
       .sort((a, b) => (a === "otros") - (b === "otros") || (totales[b] || 0) - (totales[a] || 0));
-    $("departamentos").innerHTML = "";
-    const todos = boton("Todos", "", () => { estado.deps.clear(); cambio(); });
+    const cont = $("departamentos");
+    cont.innerHTML = "";
+    const todos = chip("Todos", () => { estado.deps.clear(); cambio(); });
     todos.dataset.dep = "";
-    $("departamentos").append(todos);
+    cont.append(todos);
     deps.forEach((d) => {
-      const b = boton(meta.departamentos[d], d, () => {
+      const b = chip(meta.departamentos[d], () => {
         estado.deps.has(d) ? estado.deps.delete(d) : estado.deps.add(d);
         cambio();
       });
       b.dataset.dep = d;
-      $("departamentos").append(b);
+      cont.append(b);
     });
 
-    // Países y empresas
     const paises = [...new Set(ofertas.map((o) => o.pais))].sort((a, b) =>
       (b === "España") - (a === "España") || a.localeCompare(b, "es"));
-    llenarSelect($("pais"), paises, "Cualquier país", estado.pais);
+    llenarSelect($("pais"), paises, "Cualquier país");
     const empresas = [...new Set(ofertas.map((o) => o.empresa))].sort((a, b) => a.localeCompare(b, "es"));
-    llenarSelect($("empresa"), empresas, "Todas las empresas", estado.empresa);
+    llenarSelect($("empresa"), empresas, "Todas las empresas");
+    sincronizarSelects();
 
-    casillas($("nivel"), meta.niveles || {}, estado.niveles, "nivel",
-      ["practicas", "graduado", "intermedio", "senior", "direccion"]);
-    casillas($("modalidad"), meta.modalidades || {}, estado.modalidades, "modalidad",
-      ["presencial", "hibrido", "remoto", "sin_indicar"]);
+    casillas($("nivel"), meta.niveles || {}, estado.niveles, ["practicas", "graduado", "intermedio", "senior", "direccion"]);
+    casillas($("modalidad"), meta.modalidades || {}, estado.modalidades, ["presencial", "hibrido", "remoto", "sin_indicar"]);
 
-    $("q").value = estado.q;
-    $("dias").value = estado.dias;
-    $("orden").value = estado.orden;
-
-    let temporizador;
-    $("q").oninput = (e) => { clearTimeout(temporizador); temporizador = setTimeout(() => { estado.q = e.target.value.trim(); cambio(); }, 200); };
+    let espera;
+    $("q").oninput = (e) => { clearTimeout(espera); espera = setTimeout(() => { estado.q = e.target.value.trim(); cambio(); }, 200); };
+    $("q").onkeydown = (e) => { if (e.key === "Enter") { e.target.blur(); irAOfertas(); } };
     $("pais").onchange = (e) => { estado.pais = e.target.value; if (estado.pais) estado.zona = ""; cambio(); };
     $("empresa").onchange = (e) => { estado.empresa = e.target.value; cambio(); };
     $("dias").onchange = (e) => { estado.dias = e.target.value; cambio(); };
@@ -101,22 +163,37 @@
     document.querySelectorAll("#zona button").forEach((b) => {
       b.onclick = () => { estado.zona = b.dataset.zona; estado.pais = ""; $("pais").value = ""; cambio(); };
     });
-    $("limpiar").onclick = () => {
-      Object.assign(estado, { zona: "", pais: "", empresa: "", dias: "", q: "" });
-      estado.niveles.clear(); estado.modalidades.clear();
-      $("q").value = ""; $("pais").value = ""; $("empresa").value = ""; $("dias").value = "";
-      document.querySelectorAll(".casillas input").forEach((i) => (i.checked = false));
-      cambio();
-    };
+    $("limpiar").onclick = limpiarFiltros;
     $("mas").onclick = () => { visibles += POR_PAGINA; pintar(false); };
-    document.querySelector(".abrir-filtros").onclick = (e) => {
-      const panel = $("panel-filtros");
-      const abierto = panel.classList.toggle("abierto");
-      e.currentTarget.setAttribute("aria-expanded", abierto);
-    };
+    $("abrir-filtros").onclick = () => hojaFiltros(true);
+    $("cerrar-filtros").onclick = () => hojaFiltros(false);
+    $("fondo-filtros").onclick = () => hojaFiltros(false);
+    $("aplicar").onclick = () => { hojaFiltros(false); irAOfertas(); };
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape") hojaFiltros(false); });
   }
 
-  function boton(texto, clave, alPulsar) {
+  function hojaFiltros(abrir) {
+    $("panel-filtros").classList.toggle("abierto", abrir);
+    $("fondo-filtros").hidden = !abrir;
+    document.body.style.overflow = abrir ? "hidden" : "";
+    if (abrir) $("cerrar-filtros").focus();
+  }
+
+  function limpiarFiltros() {
+    Object.assign(estado, { zona: "", pais: "", empresa: "", dias: "", q: "" });
+    estado.niveles.clear(); estado.modalidades.clear();
+    $("q").value = "";
+    document.querySelectorAll(".casillas input").forEach((i) => (i.checked = false));
+    sincronizarSelects();
+    cambio();
+  }
+
+  function sincronizarSelects() {
+    $("pais").value = estado.pais; $("empresa").value = estado.empresa;
+    $("dias").value = estado.dias; $("orden").value = estado.orden; $("q").value = estado.q;
+  }
+
+  function chip(texto, alPulsar) {
     const b = document.createElement("button");
     b.type = "button";
     b.className = "chip";
@@ -126,14 +203,13 @@
     return b;
   }
 
-  function llenarSelect(sel, valores, vacio, actual) {
+  function llenarSelect(sel, valores, vacio) {
     sel.innerHTML = "";
     sel.append(new Option(vacio, ""));
     valores.forEach((v) => sel.append(new Option(v, v)));
-    sel.value = valores.includes(actual) ? actual : "";
   }
 
-  function casillas(cont, nombres, conjunto, campo, orden) {
+  function casillas(cont, nombres, conjunto, orden) {
     cont.innerHTML = "";
     orden.filter((k) => nombres[k]).forEach((k) => {
       const l = document.createElement("label");
@@ -151,84 +227,128 @@
     visibles = POR_PAGINA;
     escribirHash();
     pintar();
+    document.querySelectorAll(".barra-dato").forEach((b) => b.setAttribute("aria-pressed", b._activo()));
   }
 
-  // ---------- Pintado
+  // ---------------------------------------------------------------- resultados
   function pintar(reiniciar = true) {
     const filtradas = ofertas.filter((o) => cumple(o));
     if (estado.orden === "empresa") {
       filtradas.sort((a, b) => a.empresa.localeCompare(b.empresa, "es") || (b.fecha || "").localeCompare(a.fecha || ""));
     }
 
-    // Recuentos en chips y casillas (teniendo en cuenta el resto de filtros)
     const porDep = contar(ofertas.filter((o) => cumple(o, "dep")), "departamento");
     document.querySelectorAll("#departamentos .chip").forEach((b) => {
       const d = b.dataset.dep;
       const n = d ? porDep[d] || 0 : Object.values(porDep).reduce((a, x) => a + x, 0);
-      b.querySelector(".cuenta").textContent = fmtNum(n);
+      b.querySelector(".cuenta").textContent = fmt(n);
       b.classList.toggle("cero", n === 0);
       b.setAttribute("aria-pressed", d ? estado.deps.has(d) : estado.deps.size === 0);
     });
-    actualizarCuentas("nivel", contar(ofertas.filter((o) => cumple(o, "nivel")), "nivel"));
-    actualizarCuentas("modalidad", contar(ofertas.filter((o) => cumple(o, "modalidad")), "modalidad"));
+    cuentasCasillas("nivel", contar(ofertas.filter((o) => cumple(o, "nivel")), "nivel"));
+    cuentasCasillas("modalidad", contar(ofertas.filter((o) => cumple(o, "modalidad")), "modalidad"));
     document.querySelectorAll("#zona button").forEach((b) =>
-      b.setAttribute("aria-pressed", b.dataset.zona === estado.zona && !estado.pais));
+      b.setAttribute("aria-pressed", b.dataset.zona === estado.zona && !estado.pais
+        || (b.dataset.zona === "es" && estado.pais === "España")));
 
-    // Contador de filtros activos (móvil)
-    const activos = [estado.zona || estado.pais, estado.empresa, estado.dias, estado.q].filter(Boolean).length
+    const activos = [estado.zona || estado.pais, estado.empresa, estado.dias].filter(Boolean).length
       + estado.niveles.size + estado.modalidades.size;
     $("n-filtros").hidden = !activos;
     $("n-filtros").textContent = activos;
 
-    // Lista
     const n = filtradas.length;
-    $("n-res").textContent = ofertas.length
-      ? `${fmtNum(n)} ${n === 1 ? "oferta abierta" : "ofertas abiertas"}`
-      : "Sin datos todavía";
+    $("n-res").textContent = ofertas.length ? `${fmt(n)} ${n === 1 ? "oferta" : "ofertas"}` : "Sin datos todavía";
+    $("aplicar").textContent = `Ver ${fmt(n)} ${n === 1 ? "oferta" : "ofertas"}`;
+    pintarActivos();
+
     const lista = $("lista");
     if (reiniciar) lista.innerHTML = "";
-    const desde = lista.children.length;
+    const desde = lista.querySelectorAll(".oferta").length;
     const frag = document.createDocumentFragment();
-    filtradas.slice(desde, visibles).forEach((o) => frag.append(tarjeta(o)));
+    filtradas.slice(desde, visibles).forEach((o, i) => {
+      frag.append(tarjeta(o));
+      // tras la 5.ª oferta, si aún no ha elegido departamento, invitamos al test
+      if (desde + i === 4 && !estado.deps.size) frag.append(puente());
+    });
     lista.append(frag);
     $("mas").hidden = visibles >= n;
 
     const vacio = $("vacio");
     vacio.hidden = n > 0;
     if (!n) {
-      vacio.textContent = ofertas.length
-        ? "No hay ofertas con estos filtros ahora mismo. Prueba a quitar alguno o a ampliar a toda Europa."
-        : "Todavía no se han descargado ofertas. En cuanto se ejecute la primera actualización aparecerán aquí.";
+      vacio.innerHTML = ofertas.length
+        ? `<p>No hay ofertas con estos filtros ahora mismo.</p><button class="boton secundario" type="button" id="vacio-limpiar">Quitar filtros</button>`
+        : `<p>Todavía no se han descargado ofertas. Aparecerán aquí tras la primera actualización.</p>`;
+      const b = $("vacio-limpiar");
+      if (b) b.onclick = () => { estado.deps.clear(); limpiarFiltros(); };
     }
   }
 
-  function actualizarCuentas(id, cuentas) {
+  function pintarActivos() {
+    const cont = $("activos");
+    cont.innerHTML = "";
+    const pastilla = (texto, quitar) => {
+      const b = document.createElement("button");
+      b.type = "button"; b.className = "quitar"; b.textContent = texto;
+      b.setAttribute("aria-label", `Quitar filtro ${texto}`);
+      b.onclick = () => { quitar(); sincronizarSelects(); document.querySelectorAll(".casillas input").forEach((i) => (i.checked = estado.niveles.has(i.parentNode.dataset.clave) || estado.modalidades.has(i.parentNode.dataset.clave))); cambio(); };
+      cont.append(b);
+    };
+    if (estado.q) pastilla(`«${estado.q}»`, () => (estado.q = ""));
+    if (estado.zona) pastilla(estado.zona === "es" ? "España" : "Resto de Europa", () => (estado.zona = ""));
+    if (estado.pais) pastilla(estado.pais, () => (estado.pais = ""));
+    if (estado.empresa) pastilla(estado.empresa, () => (estado.empresa = ""));
+    estado.niveles.forEach((k) => pastilla(meta.niveles[k], () => estado.niveles.delete(k)));
+    estado.modalidades.forEach((k) => pastilla(meta.modalidades[k], () => estado.modalidades.delete(k)));
+    if (estado.dias) pastilla({ 1: "Últimas 24 h", 7: "Última semana", 30: "Último mes" }[estado.dias], () => (estado.dias = ""));
+  }
+
+  function cuentasCasillas(id, cuentas) {
     document.querySelectorAll(`#${id} label`).forEach((l) => {
-      l.querySelector(".cuenta").textContent = fmtNum(cuentas[l.dataset.clave] || 0);
+      l.querySelector(".cuenta").textContent = fmt(cuentas[l.dataset.clave] || 0);
     });
   }
 
   const tpl = $("tpl-oferta");
   function tarjeta(o) {
     const el = tpl.content.firstElementChild.cloneNode(true);
-    el.querySelector(".dep").textContent = (meta.departamentos || {})[o.departamento] || o.departamento;
-    const t = el.querySelector(".fecha");
-    t.textContent = haceCuanto(o.fecha);
-    if (o.fecha) t.dateTime = o.fecha;
-    const a = el.querySelector(".titulo");
-    a.textContent = o.titulo;
+    const a = el.querySelector(".oferta-enlace");
     a.href = o.url;
+    const av = el.querySelector(".avatar");
+    av.textContent = iniciales(o.empresa);
+    av.style.setProperty("--color", colorDe(o.empresa));
     el.querySelector(".empresa").textContent = o.empresa;
+    const f = el.querySelector(".fecha");
+    const dias = o.fecha ? diasDesde(o.fecha) : null;
+    f.textContent = dias === null ? "" : dias <= 2 ? (dias <= 0 ? "Nueva · hoy" : dias === 1 ? "Nueva · ayer" : "Nueva") : haceCuanto(dias);
+    f.classList.toggle("nueva", dias !== null && dias <= 2);
+    el.querySelector(".titulo").textContent = limpiarTitulo(o.titulo);
     el.querySelector(".lugar").textContent = lugar(o);
-    const extra = [
-      (meta.niveles || {})[o.nivel],
-      o.modalidad !== "sin_indicar" ? (meta.modalidades || {})[o.modalidad] : "",
-      traducirJornada(o.jornada),
-    ].filter(Boolean);
-    const p = el.querySelector(".extra");
-    extra.forEach((x) => { const s = document.createElement("span"); s.textContent = x; p.append(s); });
+    const et = el.querySelector(".etiquetas");
+    const etiqueta = (texto, clase = "") => { const s = document.createElement("span"); s.className = "etiqueta " + clase; s.textContent = texto; et.append(s); };
+    if (o.departamento !== "otros") etiqueta(nombreDep(o.departamento), "dep");
+    if (o.nivel && o.nivel !== "intermedio") etiqueta(meta.niveles[o.nivel], o.nivel === "practicas" ? "practicas" : "");
+    if (o.modalidad && o.modalidad !== "sin_indicar" && o.modalidad !== "presencial") etiqueta(meta.modalidades[o.modalidad]);
     return el;
   }
+
+  function puente() {
+    const li = document.createElement("li");
+    li.innerHTML = `<a class="puente" href="${TEST_URL}">
+      <div><p class="puente-titulo">¿No sabes qué departamento <em>encaja contigo</em>?</p>
+      <p class="puente-texto">Haz el test de salidas científicas: 20 preguntas y descubres tus áreas con más afinidad.</p></div>
+      <span class="boton">Hacer el test</span></a>`;
+    return li;
+  }
+
+  const iniciales = (e) => {
+    const limpio = e.replace(/\(.*?\)/g, "").replace(/&/g, " ").trim();
+    const p = limpio.split(/\s+/).filter((x) => /^[A-Za-zÀ-ÿ]/.test(x));
+    if (/^[A-Z]{2,5}$/.test(limpio)) return limpio.slice(0, 3);
+    return (p.length > 1 ? p[0][0] + p[1][0] : limpio.slice(0, 2)).toUpperCase();
+  };
+  const colorDe = (e) => { let h = 0; for (const c of e) h = (h * 31 + c.charCodeAt(0)) >>> 0; return COLORES[h % COLORES.length]; };
+  const limpiarTitulo = (t) => t.replace(/\s*\((m\/w\/d|m\/f\/d|f\/m\/d|w\/m\/d|all genders|h\/f|f\/h|m\/f|w\/m\/d\/x)\)\s*/gi, " ").trim();
 
   function lugar(o) {
     const u = (o.ubicacion || "").trim();
@@ -236,29 +356,21 @@
     return (u.includes(o.pais) || /,|^[A-Z]{2}\s*-/.test(u)) ? u : `${u} (${o.pais})`;
   }
 
-  function traducirJornada(j) {
-    const t = normalizar(j);
-    if (!t) return "";
-    if (t.includes("full")) return "Jornada completa";
-    if (t.includes("part")) return "Jornada parcial";
-    if (t.includes("temp") || t.includes("fixed")) return "Temporal";
-    return j;
+  function diasDesde(fecha) {
+    return Math.floor((Date.now() - new Date(fecha + "T12:00:00").getTime()) / 86400000);
   }
-
-  function haceCuanto(fecha) {
-    if (!fecha) return "";
-    const dias = Math.floor((Date.now() - new Date(fecha + "T12:00:00").getTime()) / 86400000);
-    if (dias <= 0) return "hoy";
-    if (dias === 1) return "ayer";
+  function haceCuanto(dias) {
     if (dias < 30) return `hace ${dias} días`;
     if (dias < 60) return "hace 1 mes";
     return `hace ${Math.floor(dias / 30)} meses`;
   }
+  const escapar = (t) => t.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 
+  // ---------------------------------------------------------------- pie
   function pintarPie() {
     if (meta.actualizado) {
       const f = new Date(meta.actualizado);
-      $("actualizado").textContent = `Última actualización: ${f.toLocaleDateString("es-ES", { day: "numeric", month: "long", year: "numeric" })}, ${f.toLocaleTimeString("es-ES", { hour: "2-digit", minute: "2-digit" })} · ${fmtNum(meta.total || 0)} ofertas.`;
+      $("actualizado").textContent = `Actualizado el ${f.toLocaleDateString("es-ES", { day: "numeric", month: "long" })} a las ${f.toLocaleTimeString("es-ES", { hour: "2-digit", minute: "2-digit" })}.`;
     } else {
       $("actualizado").textContent = "Aún no hay ninguna actualización.";
     }
@@ -267,14 +379,14 @@
       ul.innerHTML = "";
       (s.fuentes || []).sort((a, b) => a.empresa.localeCompare(b.empresa, "es")).forEach((f) => {
         const li = document.createElement("li");
-        li.textContent = f.ok ? `${f.empresa} — ${fmtNum(f.ofertas)} ofertas` : `${f.empresa} — no disponible hoy`;
+        li.textContent = f.ok ? `${f.empresa} — ${fmt(f.ofertas)}` : `${f.empresa} — no disponible hoy`;
         if (!f.ok) li.className = "ko";
         ul.append(li);
       });
     }).catch(() => {});
   }
 
-  // ---------- Enlace compartible (los filtros viajan en la URL)
+  // ---------------------------------------------------------------- enlace compartible
   function escribirHash() {
     const p = new URLSearchParams();
     if (estado.deps.size) p.set("dep", [...estado.deps].join(","));
