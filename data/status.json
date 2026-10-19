@@ -1,17 +1,17 @@
 {
- "actualizado": "2026-10-18T12:38+00:00",
+ "actualizado": "2026-10-19T06:56+00:00",
  "fuentes": [
   {
    "empresa": "IQVIA",
    "tipo": "workday",
    "ok": true,
-   "ofertas": 817
+   "ofertas": 818
   },
   {
    "empresa": "Pfizer",
    "tipo": "workday",
    "ok": true,
-   "ofertas": 72
+   "ofertas": 62
   },
   {
    "empresa": "Amgen",
@@ -29,7 +29,7 @@
    "empresa": "MSD",
    "tipo": "workday",
    "ok": true,
-   "ofertas": 58
+   "ofertas": 55
   },
   {
    "empresa": "Evotec",
@@ -53,7 +53,7 @@
    "empresa": "Gilead",
    "tipo": "workday",
    "ok": true,
-   "ofertas": 47
+   "ofertas": 46
   },
   {
    "empresa": "Rovi",
@@ -65,7 +65,7 @@
    "empresa": "Regeneron",
    "tipo": "workday",
    "ok": true,
-   "ofertas": 60
+   "ofertas": 61
   },
   {
    "empresa": "Ipsen",
@@ -77,13 +77,13 @@
    "empresa": "Lonza",
    "tipo": "workday",
    "ok": true,
-   "ofertas": 253
+   "ofertas": 254
   },
   {
    "empresa": "Ferring",
    "tipo": "workday",
    "ok": true,
-   "ofertas": 15
+   "ofertas": 14
   },
   {
    "empresa": "Sartorius",
@@ -95,7 +95,7 @@
    "empresa": "Roche",
    "tipo": "sitemap",
    "ok": true,
-   "ofertas": 537
+   "ofertas": 530
   },
   {
    "empresa": "GSK",
@@ -107,7 +107,7 @@
    "empresa": "Thermo Fisher (PPD)",
    "tipo": "sitemap",
    "ok": true,
-   "ofertas": 180
+   "ofertas": 217
   },
   {
    "empresa": "Labcorp",
@@ -125,25 +125,25 @@
    "empresa": "Merck KGaA",
    "tipo": "sitemap",
    "ok": true,
-   "ofertas": 213
+   "ofertas": 214
   },
   {
    "empresa": "Eli Lilly",
    "tipo": "sitemap",
    "ok": true,
-   "ofertas": 73
+   "ofertas": 72
   },
   {
    "empresa": "AstraZeneca",
    "tipo": "html",
    "ok": true,
-   "ofertas": 240
+   "ofertas": 230
   },
   {
    "empresa": "Sanofi",
    "tipo": "html",
    "ok": true,
-   "ofertas": 340
+   "ofertas": 332
   },
   {
    "empresa": "Parexel",
@@ -173,7 +173,7 @@
    "empresa": "BioMarin",
    "tipo": "html",
    "ok": true,
-   "ofertas": 18
+   "ofertas": 17
   },
   {
    "empresa": "Medpace",
@@ -183,8 +183,8 @@
   }
  ],
  "descartadas": {
-  "publicada hace más de 30 días": 1396,
-  "bolsa de traductores": 133,
-  "bolsa 'Save for Later'": 21
+  "publicada hace más de 30 días": 1434,
+  "bolsa de traductores": 134,
+  "bolsa 'Save for Later'": 19
  }
 }
