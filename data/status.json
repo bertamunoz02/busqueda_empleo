@@ -1,23 +1,23 @@
 {
- "actualizado": "2026-10-19T10:44+00:00",
+ "actualizado": "2026-10-20T10:02+00:00",
  "fuentes": [
   {
    "empresa": "IQVIA",
    "tipo": "workday",
    "ok": true,
-   "ofertas": 817
+   "ofertas": 818
   },
   {
    "empresa": "Pfizer",
    "tipo": "workday",
    "ok": true,
-   "ofertas": 62
+   "ofertas": 59
   },
   {
    "empresa": "Amgen",
    "tipo": "workday",
    "ok": true,
-   "ofertas": 95
+   "ofertas": 94
   },
   {
    "empresa": "Bristol Myers Squibb",
@@ -35,49 +35,49 @@
    "empresa": "Evotec",
    "tipo": "workday",
    "ok": true,
-   "ofertas": 47
+   "ofertas": 46
   },
   {
    "empresa": "Almirall",
    "tipo": "workday",
    "ok": true,
-   "ofertas": 55
+   "ofertas": 58
   },
   {
    "empresa": "Viatris",
    "tipo": "workday",
    "ok": true,
-   "ofertas": 137
+   "ofertas": 138
   },
   {
    "empresa": "Gilead",
    "tipo": "workday",
    "ok": true,
-   "ofertas": 45
+   "ofertas": 46
   },
   {
    "empresa": "Rovi",
    "tipo": "workday",
    "ok": true,
-   "ofertas": 35
+   "ofertas": 34
   },
   {
    "empresa": "Regeneron",
    "tipo": "workday",
    "ok": true,
-   "ofertas": 60
+   "ofertas": 57
   },
   {
    "empresa": "Ipsen",
    "tipo": "workday",
    "ok": true,
-   "ofertas": 131
+   "ofertas": 130
   },
   {
    "empresa": "Lonza",
    "tipo": "workday",
    "ok": true,
-   "ofertas": 253
+   "ofertas": 250
   },
   {
    "empresa": "Ferring",
@@ -89,102 +89,102 @@
    "empresa": "Sartorius",
    "tipo": "workday",
    "ok": true,
-   "ofertas": 98
+   "ofertas": 100
   },
   {
    "empresa": "Roche",
    "tipo": "sitemap",
    "ok": true,
-   "ofertas": 528
+   "ofertas": 530
   },
   {
    "empresa": "GSK",
    "tipo": "sitemap",
    "ok": true,
-   "ofertas": 180
+   "ofertas": 193
   },
   {
    "empresa": "Thermo Fisher (PPD)",
    "tipo": "sitemap",
    "ok": true,
-   "ofertas": 242
+   "ofertas": 245
   },
   {
    "empresa": "Labcorp",
    "tipo": "sitemap",
    "ok": true,
-   "ofertas": 43
+   "ofertas": 46
   },
   {
    "empresa": "Fortrea",
    "tipo": "sitemap",
    "ok": true,
-   "ofertas": 74
+   "ofertas": 77
   },
   {
    "empresa": "Merck KGaA",
    "tipo": "sitemap",
    "ok": true,
-   "ofertas": 214
+   "ofertas": 213
   },
   {
    "empresa": "Eli Lilly",
    "tipo": "sitemap",
    "ok": true,
-   "ofertas": 73
+   "ofertas": 74
   },
   {
    "empresa": "AstraZeneca",
    "tipo": "html",
    "ok": true,
-   "ofertas": 230
+   "ofertas": 237
   },
   {
    "empresa": "Sanofi",
    "tipo": "html",
    "ok": true,
-   "ofertas": 335
+   "ofertas": 339
   },
   {
    "empresa": "Parexel",
    "tipo": "html",
    "ok": true,
-   "ofertas": 69
+   "ofertas": 71
   },
   {
    "empresa": "Takeda",
    "tipo": "html",
    "ok": true,
-   "ofertas": 274
+   "ofertas": 287
   },
   {
    "empresa": "ICON",
    "tipo": "html",
    "ok": true,
-   "ofertas": 94
+   "ofertas": 98
   },
   {
    "empresa": "Novartis",
    "tipo": "html",
    "ok": true,
-   "ofertas": 72
+   "ofertas": 117
   },
   {
    "empresa": "BioMarin",
    "tipo": "html",
    "ok": true,
-   "ofertas": 18
+   "ofertas": 20
   },
   {
    "empresa": "Medpace",
    "tipo": "api_json",
    "ok": true,
-   "ofertas": 292
+   "ofertas": 290
   }
  ],
  "descartadas": {
-  "publicada hace más de 30 días": 1424,
+  "publicada hace más de 30 días": 1378,
   "bolsa de traductores": 134,
-  "bolsa 'Save for Later'": 19
+  "bolsa 'Save for Later'": 20
  }
 }
