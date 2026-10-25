@@ -1,11 +1,11 @@
 {
- "actualizado": "2026-10-24T09:31+00:00",
+ "actualizado": "2026-10-25T09:47+00:00",
  "fuentes": [
   {
    "empresa": "IQVIA",
    "tipo": "workday",
    "ok": true,
-   "ofertas": 845
+   "ofertas": 846
   },
   {
    "empresa": "Pfizer",
@@ -29,7 +29,7 @@
    "empresa": "MSD",
    "tipo": "workday",
    "ok": true,
-   "ofertas": 65
+   "ofertas": 63
   },
   {
    "empresa": "Evotec",
@@ -41,7 +41,7 @@
    "empresa": "Almirall",
    "tipo": "workday",
    "ok": true,
-   "ofertas": 55
+   "ofertas": 54
   },
   {
    "empresa": "Viatris",
@@ -71,7 +71,7 @@
    "empresa": "Ipsen",
    "tipo": "workday",
    "ok": true,
-   "ofertas": 134
+   "ofertas": 133
   },
   {
    "empresa": "Lonza",
@@ -95,7 +95,7 @@
    "empresa": "Roche",
    "tipo": "sitemap",
    "ok": true,
-   "ofertas": 533
+   "ofertas": 530
   },
   {
    "empresa": "GSK",
@@ -107,7 +107,7 @@
    "empresa": "Thermo Fisher (PPD)",
    "tipo": "sitemap",
    "ok": true,
-   "ofertas": 218
+   "ofertas": 252
   },
   {
    "empresa": "Labcorp",
@@ -131,13 +131,13 @@
    "empresa": "Eli Lilly",
    "tipo": "sitemap",
    "ok": true,
-   "ofertas": 75
+   "ofertas": 74
   },
   {
    "empresa": "AstraZeneca",
    "tipo": "html",
    "ok": true,
-   "ofertas": 237
+   "ofertas": 235
   },
   {
    "empresa": "Sanofi",
@@ -149,7 +149,7 @@
    "empresa": "Parexel",
    "tipo": "html",
    "ok": true,
-   "ofertas": 75
+   "ofertas": 76
   },
   {
    "empresa": "Takeda",
@@ -183,7 +183,7 @@
   }
  ],
  "descartadas": {
-  "publicada hace más de 30 días": 1431,
+  "publicada hace más de 30 días": 1481,
   "bolsa de traductores": 134,
   "bolsa 'Save for Later'": 15
  }
