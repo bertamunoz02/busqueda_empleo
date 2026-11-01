@@ -1,35 +1,35 @@
 {
- "actualizado": "2026-10-31T10:54+00:00",
+ "actualizado": "2026-11-01T11:49+00:00",
  "fuentes": [
   {
    "empresa": "IQVIA",
    "tipo": "workday",
    "ok": true,
-   "ofertas": 864
+   "ofertas": 855
   },
   {
    "empresa": "Pfizer",
    "tipo": "workday",
    "ok": true,
-   "ofertas": 56
+   "ofertas": 54
   },
   {
    "empresa": "Amgen",
    "tipo": "workday",
    "ok": true,
-   "ofertas": 88
+   "ofertas": 86
   },
   {
    "empresa": "Bristol Myers Squibb",
    "tipo": "workday",
    "ok": true,
-   "ofertas": 46
+   "ofertas": 45
   },
   {
    "empresa": "MSD",
    "tipo": "workday",
    "ok": true,
-   "ofertas": 66
+   "ofertas": 62
   },
   {
    "empresa": "Evotec",
@@ -95,25 +95,25 @@
    "empresa": "Roche",
    "tipo": "sitemap",
    "ok": true,
-   "ofertas": 506
+   "ofertas": 500
   },
   {
    "empresa": "GSK",
    "tipo": "sitemap",
    "ok": true,
-   "ofertas": 261
+   "ofertas": 251
   },
   {
    "empresa": "Thermo Fisher (PPD)",
    "tipo": "sitemap",
    "ok": true,
-   "ofertas": 168
+   "ofertas": 195
   },
   {
    "empresa": "Labcorp",
    "tipo": "sitemap",
    "ok": true,
-   "ofertas": 39
+   "ofertas": 43
   },
   {
    "empresa": "Fortrea",
@@ -125,7 +125,7 @@
    "empresa": "Merck KGaA",
    "tipo": "sitemap",
    "ok": true,
-   "ofertas": 226
+   "ofertas": 225
   },
   {
    "empresa": "Eli Lilly",
@@ -137,19 +137,19 @@
    "empresa": "AstraZeneca",
    "tipo": "html",
    "ok": true,
-   "ofertas": 230
+   "ofertas": 222
   },
   {
    "empresa": "Sanofi",
    "tipo": "html",
    "ok": true,
-   "ofertas": 19
+   "ofertas": 313
   },
   {
    "empresa": "Parexel",
    "tipo": "html",
    "ok": true,
-   "ofertas": 73
+   "ofertas": 72
   },
   {
    "empresa": "Takeda",
@@ -167,7 +167,7 @@
    "empresa": "Novartis",
    "tipo": "html",
    "ok": true,
-   "ofertas": 95
+   "ofertas": 72
   },
   {
    "empresa": "BioMarin",
@@ -183,8 +183,8 @@
   }
  ],
  "descartadas": {
-  "publicada hace más de 30 días": 1499,
+  "publicada hace más de 30 días": 1523,
   "bolsa de traductores": 134,
-  "bolsa 'Save for Later'": 2
+  "bolsa 'Save for Later'": 18
  }
 }
