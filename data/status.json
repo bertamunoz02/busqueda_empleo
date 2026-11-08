@@ -1,17 +1,17 @@
 {
- "actualizado": "2026-11-07T11:42+00:00",
+ "actualizado": "2026-11-08T11:55+00:00",
  "fuentes": [
   {
    "empresa": "IQVIA",
    "tipo": "workday",
    "ok": true,
-   "ofertas": 853
+   "ofertas": 855
   },
   {
    "empresa": "Pfizer",
    "tipo": "workday",
    "ok": true,
-   "ofertas": 60
+   "ofertas": 58
   },
   {
    "empresa": "Amgen",
@@ -23,13 +23,13 @@
    "empresa": "Bristol Myers Squibb",
    "tipo": "workday",
    "ok": true,
-   "ofertas": 52
+   "ofertas": 51
   },
   {
    "empresa": "MSD",
    "tipo": "workday",
    "ok": true,
-   "ofertas": 71
+   "ofertas": 64
   },
   {
    "empresa": "Evotec",
@@ -47,7 +47,7 @@
    "empresa": "Viatris",
    "tipo": "workday",
    "ok": true,
-   "ofertas": 139
+   "ofertas": 138
   },
   {
    "empresa": "Gilead",
@@ -89,31 +89,31 @@
    "empresa": "Sartorius",
    "tipo": "workday",
    "ok": true,
-   "ofertas": 111
+   "ofertas": 110
   },
   {
    "empresa": "Roche",
    "tipo": "sitemap",
    "ok": true,
-   "ofertas": 511
+   "ofertas": 506
   },
   {
    "empresa": "GSK",
    "tipo": "sitemap",
    "ok": true,
-   "ofertas": 224
+   "ofertas": 221
   },
   {
    "empresa": "Thermo Fisher (PPD)",
    "tipo": "sitemap",
    "ok": true,
-   "ofertas": 180
+   "ofertas": 208
   },
   {
    "empresa": "Labcorp",
    "tipo": "sitemap",
    "ok": true,
-   "ofertas": 41
+   "ofertas": 44
   },
   {
    "empresa": "Fortrea",
@@ -131,31 +131,31 @@
    "empresa": "Eli Lilly",
    "tipo": "sitemap",
    "ok": true,
-   "ofertas": 75
+   "ofertas": 84
   },
   {
    "empresa": "AstraZeneca",
    "tipo": "html",
    "ok": true,
-   "ofertas": 239
+   "ofertas": 234
   },
   {
    "empresa": "Sanofi",
    "tipo": "html",
    "ok": true,
-   "ofertas": 311
+   "ofertas": 307
   },
   {
    "empresa": "Parexel",
    "tipo": "html",
    "ok": true,
-   "ofertas": 73
+   "ofertas": 71
   },
   {
    "empresa": "Takeda",
    "tipo": "html",
    "ok": true,
-   "ofertas": 327
+   "ofertas": 326
   },
   {
    "empresa": "ICON",
@@ -183,7 +183,7 @@
   }
  ],
  "descartadas": {
-  "publicada hace más de 30 días": 1502,
+  "publicada hace más de 30 días": 1559,
   "bolsa de traductores": 134,
   "bolsa 'Save for Later'": 19
  }
