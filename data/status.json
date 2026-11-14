@@ -1,35 +1,40 @@
 {
- "actualizado": "2026-11-13T13:05+00:00",
+ "actualizado": "2026-11-14T12:09+00:00",
  "fuentes": [
   {
    "empresa": "IQVIA",
    "tipo": "workday",
-   "ok": true,
-   "ofertas": 858
+   "ok": false,
+   "error": "JSONDecodeError: Expecting value: line 1 column 1 (char 0)",
+   "conservadas": 476
   },
   {
    "empresa": "Pfizer",
    "tipo": "workday",
-   "ok": true,
-   "ofertas": 52
+   "ok": false,
+   "error": "JSONDecodeError: Expecting value: line 1 column 1 (char 0)",
+   "conservadas": 47
   },
   {
    "empresa": "Amgen",
    "tipo": "workday",
-   "ok": true,
-   "ofertas": 85
+   "ok": false,
+   "error": "JSONDecodeError: Expecting value: line 1 column 1 (char 0)",
+   "conservadas": 47
   },
   {
    "empresa": "Bristol Myers Squibb",
    "tipo": "workday",
-   "ok": true,
-   "ofertas": 55
+   "ok": false,
+   "error": "JSONDecodeError: Expecting value: line 1 column 1 (char 0)",
+   "conservadas": 35
   },
   {
    "empresa": "MSD",
    "tipo": "workday",
-   "ok": true,
-   "ofertas": 68
+   "ok": false,
+   "error": "JSONDecodeError: Expecting value: line 1 column 1 (char 0)",
+   "conservadas": 66
   },
   {
    "empresa": "Evotec",
@@ -46,14 +51,16 @@
   {
    "empresa": "Viatris",
    "tipo": "workday",
-   "ok": true,
-   "ofertas": 144
+   "ok": false,
+   "error": "JSONDecodeError: Expecting value: line 1 column 1 (char 0)",
+   "conservadas": 69
   },
   {
    "empresa": "Gilead",
    "tipo": "workday",
-   "ok": true,
-   "ofertas": 47
+   "ok": false,
+   "error": "JSONDecodeError: Expecting value: line 1 column 1 (char 0)",
+   "conservadas": 27
   },
   {
    "empresa": "Rovi",
@@ -64,50 +71,51 @@
   {
    "empresa": "Regeneron",
    "tipo": "workday",
-   "ok": true,
-   "ofertas": 55
+   "ok": false,
+   "error": "JSONDecodeError: Expecting value: line 1 column 1 (char 0)",
+   "conservadas": 35
   },
   {
    "empresa": "Ipsen",
    "tipo": "workday",
    "ok": true,
-   "ofertas": 152
+   "ofertas": 151
   },
   {
    "empresa": "Lonza",
    "tipo": "workday",
    "ok": true,
-   "ofertas": 265
+   "ofertas": 264
   },
   {
    "empresa": "Ferring",
    "tipo": "workday",
    "ok": true,
-   "ofertas": 24
+   "ofertas": 22
   },
   {
    "empresa": "Sartorius",
    "tipo": "workday",
    "ok": true,
-   "ofertas": 103
+   "ofertas": 102
   },
   {
    "empresa": "Roche",
    "tipo": "sitemap",
    "ok": true,
-   "ofertas": 484
+   "ofertas": 493
   },
   {
    "empresa": "GSK",
    "tipo": "sitemap",
    "ok": true,
-   "ofertas": 215
+   "ofertas": 225
   },
   {
    "empresa": "Thermo Fisher (PPD)",
    "tipo": "sitemap",
    "ok": true,
-   "ofertas": 238
+   "ofertas": 231
   },
   {
    "empresa": "Labcorp",
@@ -120,7 +128,7 @@
    "empresa": "Fortrea",
    "tipo": "sitemap",
    "ok": true,
-   "ofertas": 73
+   "ofertas": 72
   },
   {
    "empresa": "Merck KGaA",
@@ -132,19 +140,19 @@
    "empresa": "Eli Lilly",
    "tipo": "sitemap",
    "ok": true,
-   "ofertas": 86
+   "ofertas": 88
   },
   {
    "empresa": "AstraZeneca",
    "tipo": "html",
    "ok": true,
-   "ofertas": 246
+   "ofertas": 244
   },
   {
    "empresa": "Sanofi",
    "tipo": "html",
    "ok": true,
-   "ofertas": 314
+   "ofertas": 311
   },
   {
    "empresa": "Parexel",
@@ -156,13 +164,13 @@
    "empresa": "Takeda",
    "tipo": "html",
    "ok": true,
-   "ofertas": 339
+   "ofertas": 337
   },
   {
    "empresa": "ICON",
    "tipo": "html",
    "ok": true,
-   "ofertas": 87
+   "ofertas": 79
   },
   {
    "empresa": "Novartis",
@@ -174,18 +182,17 @@
    "empresa": "BioMarin",
    "tipo": "html",
    "ok": true,
-   "ofertas": 24
+   "ofertas": 25
   },
   {
    "empresa": "Medpace",
    "tipo": "api_json",
    "ok": true,
-   "ofertas": 283
+   "ofertas": 285
   }
  ],
  "descartadas": {
-  "publicada hace más de 30 días": 1464,
-  "bolsa de traductores": 134,
+  "publicada hace más de 30 días": 1070,
   "bolsa 'Save for Later'": 18
  }
 }
