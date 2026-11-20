@@ -1,71 +1,71 @@
 {
- "actualizado": "2026-11-19T14:24+00:00",
+ "actualizado": "2026-11-20T13:59+00:00",
  "fuentes": [
   {
    "empresa": "IQVIA",
    "tipo": "workday",
    "ok": true,
-   "ofertas": 893
+   "ofertas": 902
   },
   {
    "empresa": "Pfizer",
    "tipo": "workday",
    "ok": true,
-   "ofertas": 56
+   "ofertas": 59
   },
   {
    "empresa": "Amgen",
    "tipo": "workday",
    "ok": true,
-   "ofertas": 92
+   "ofertas": 95
   },
   {
    "empresa": "Bristol Myers Squibb",
    "tipo": "workday",
    "ok": true,
-   "ofertas": 50
+   "ofertas": 53
   },
   {
    "empresa": "MSD",
    "tipo": "workday",
    "ok": true,
-   "ofertas": 72
+   "ofertas": 71
   },
   {
    "empresa": "Evotec",
    "tipo": "workday",
    "ok": true,
-   "ofertas": 38
+   "ofertas": 36
   },
   {
    "empresa": "Almirall",
    "tipo": "workday",
    "ok": true,
-   "ofertas": 56
+   "ofertas": 54
   },
   {
    "empresa": "Viatris",
    "tipo": "workday",
    "ok": true,
-   "ofertas": 145
+   "ofertas": 140
   },
   {
    "empresa": "Gilead",
    "tipo": "workday",
    "ok": true,
-   "ofertas": 40
+   "ofertas": 42
   },
   {
    "empresa": "Rovi",
    "tipo": "workday",
    "ok": true,
-   "ofertas": 39
+   "ofertas": 40
   },
   {
    "empresa": "Regeneron",
    "tipo": "workday",
    "ok": true,
-   "ofertas": 52
+   "ofertas": 49
   },
   {
    "empresa": "Ipsen",
@@ -83,68 +83,68 @@
    "empresa": "Ferring",
    "tipo": "workday",
    "ok": true,
-   "ofertas": 26
+   "ofertas": 24
   },
   {
    "empresa": "Sartorius",
    "tipo": "workday",
    "ok": true,
-   "ofertas": 94
+   "ofertas": 95
   },
   {
    "empresa": "Roche",
    "tipo": "sitemap",
    "ok": true,
-   "ofertas": 480
+   "ofertas": 483
   },
   {
    "empresa": "GSK",
    "tipo": "sitemap",
    "ok": true,
-   "ofertas": 230
+   "ofertas": 223
   },
   {
    "empresa": "Thermo Fisher (PPD)",
    "tipo": "sitemap",
    "ok": true,
-   "ofertas": 250
+   "ofertas": 278
   },
   {
    "empresa": "Labcorp",
    "tipo": "sitemap",
    "ok": false,
    "error": "RuntimeError: el sitemap no contiene URLs de ofertas",
-   "conservadas": 25
+   "conservadas": 24
   },
   {
    "empresa": "Fortrea",
    "tipo": "sitemap",
    "ok": true,
-   "ofertas": 81
+   "ofertas": 90
   },
   {
    "empresa": "Merck KGaA",
    "tipo": "sitemap",
    "ok": true,
-   "ofertas": 215
+   "ofertas": 220
   },
   {
    "empresa": "Eli Lilly",
    "tipo": "sitemap",
    "ok": true,
-   "ofertas": 85
+   "ofertas": 74
   },
   {
    "empresa": "AstraZeneca",
    "tipo": "html",
    "ok": true,
-   "ofertas": 255
+   "ofertas": 249
   },
   {
    "empresa": "Sanofi",
    "tipo": "html",
    "ok": true,
-   "ofertas": 304
+   "ofertas": 306
   },
   {
    "empresa": "Parexel",
@@ -162,7 +162,7 @@
    "empresa": "ICON",
    "tipo": "html",
    "ok": true,
-   "ofertas": 10
+   "ofertas": 9
   },
   {
    "empresa": "Novartis",
@@ -174,7 +174,7 @@
    "empresa": "BioMarin",
    "tipo": "html",
    "ok": true,
-   "ofertas": 35
+   "ofertas": 36
   },
   {
    "empresa": "Medpace",
@@ -184,7 +184,7 @@
   }
  ],
  "descartadas": {
-  "publicada hace más de 30 días": 1508,
+  "publicada hace más de 30 días": 1520,
   "bolsa de traductores": 134,
   "bolsa 'Save for Later'": 16
  }
